@@ -1,116 +1,113 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Guru - Portal Sekolah</title>
 
-<title>Login Portal Sekolah</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f3f4f6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-}
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-.login-box {
-    background: white;
-    width: 350px;
-    padding: 35px;
-    border-radius: 15px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-}
+    .login-box {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      width: 320px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
 
-h1 {
-    text-align: center;
-}
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
 
-.subtitle {
-    text-align: center;
-    color: #666;
-}
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
 
-label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 6px;
-}
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #333;
+      color: white;
+      font-size: 16px;
+    }
 
-input {
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
+    button:hover {
+      opacity: 0.9;
+    }
 
-button {
-    width: 100%;
-    padding: 13px;
-    margin-top: 25px;
-    border: none;
-    border-radius: 8px;
-    background: #2563eb;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#error {
-    color: red;
-    text-align: center;
-    margin-top: 15px;
-}
-</style>
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      color: #d00;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="login-box">
+  <div class="login-box">
+    <h2>Portal Sekolah</h2>
 
-<h1>Portal Sekolah</h1>
+    <input type="email" id="email" placeholder="Email guru">
+    <input type="password" id="password" placeholder="Password">
 
-<div class="subtitle">
-Log masuk untuk meneruskan
-</div>
+    <button onclick="login()">Log Masuk</button>
 
-<label>Email Guru</label>
-<input type="email" id="email" placeholder="Email guru">
+    <div id="message"></div>
+  </div>
 
-<label>Password</label>
-<input type="password" id="password" placeholder="Password">
+  <script>
+    const SUPABASE_URL = "https://edrbpbinutswlxislomo.supabase.co";
 
-<button onclick="login()">Log Masuk</button>
+    const SUPABASE_KEY = "sb_publishable_0e-OOVhhhthMf5yC28QTHw_vYTmWbQa";
 
-<div id="error"></div>
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
-</div>
+    async function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const message = document.getElementById("message");
 
-<script>
+      message.textContent = "Sedang log masuk...";
 
-function login() {
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+      if (error) {
+        message.textContent = "Email atau password tidak betul.";
+        return;
+      }
 
-    if (email === "guru@sekolah.com" && password === "123456") {
-
-        window.location.href = "dashboard.html";
-
-    } else {
-
-        document.getElementById("error").innerText =
-        "Email atau password tidak betul.";
-
+      window.location.href = "dashboard.html";
     }
-
-}
-
-</script>
+  </script>
 
 </body>
 </html>
