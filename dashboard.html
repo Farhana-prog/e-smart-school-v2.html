@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard Guru</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #222;
+}
+
+header {
+    background: #1e3a8a;
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.logout {
+    background: white;
+    color: #1e3a8a;
+    border: none;
+    padding: 9px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.welcome {
+    margin-bottom: 30px;
+}
+
+.welcome h2 {
+    margin-bottom: 5px;
+}
+
+.welcome p {
+    color: #666;
+}
+
+.modules {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    text-decoration: none;
+    color: #222;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    margin: 5px 0;
+}
+
+.card p {
+    color: #666;
+}
+
+@media (max-width: 600px) {
+    .modules {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    .container {
+        margin: 20px auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>Portal Pengurusan Sekolah</h1>
+
+    <button class="logout" onclick="logout()">
+        Log Keluar
+    </button>
+
+</header>
+
+<div class="container">
+
+    <div class="welcome">
+
+        <h2>Selamat Datang, Cikgu 👋</h2>
+
+        <p>
+            Sila pilih modul yang ingin digunakan.
+        </p>
+
+    </div>
+
+    <div class="modules">
+
+        <a class="card" href="index.html">
+
+            <div class="icon">📄</div>
+
+            <h3>OPR</h3>
+
+            <p>
+                Pengurusan dan rekod OPR.
+            </p>
+
+        </a>
+
+
+        <a class="card" href="index.html">
+
+            <div class="icon">📁</div>
+
+            <h3>Evidens SK@S</h3>
+
+            <p>
+                Pengurusan evidens SK@S.
+            </p>
+
+        </a>
+
+
+        <a class="card" href="index.html">
+
+            <div class="icon">🗂️</div>
+
+            <h3>Fail Panitia</h3>
+
+            <p>
+                Akses dan pengurusan fail panitia.
+            </p>
+
+        </a>
+
+
+        <a class="card" href="index.html">
+
+            <div class="icon">🏫</div>
+
+            <h3>Tempahan Bilik</h3>
+
+            <p>
+                Semak dan buat tempahan bilik.
+            </p>
+
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+function logout() {
+
+    window.location.href = "login.html";
+
+}
+
+</script>
+
+</body>
+</html>
