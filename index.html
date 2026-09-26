@@ -34,3 +34,1969 @@ body{
     overflow-y:auto;
 }
 
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo-icon{
+    font-size:45px;
+}
+
+.logo h2{
+    margin-top:8px;
+    font-size:21px;
+}
+
+.logo p{
+    font-size:12px;
+    color:#fde047;
+    margin-top:5px;
+}
+
+.menu button{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:white;
+    padding:14px;
+    margin:4px 0;
+    border-radius:9px;
+    text-align:left;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:#facc15;
+    color:#17351f;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:250px;
+    padding:30px;
+}
+
+.topbar{
+    background:white;
+    padding:20px 25px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    border-left:6px solid #facc15;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.topbar h1{
+    color:#166534;
+}
+
+.user{
+    background:#fef9c3;
+    padding:10px 15px;
+    border-radius:20px;
+    font-size:14px;
+}
+
+/* PAGE */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+/* DASHBOARD */
+
+.welcome{
+    background:linear-gradient(135deg,#166534,#22c55e);
+    color:white;
+    padding:30px;
+    border-radius:18px;
+    margin-bottom:25px;
+}
+
+.welcome h2{
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.welcome p{
+    color:#fef08a;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+    border-top:5px solid #22c55e;
+}
+
+.card:nth-child(even){
+    border-top-color:#facc15;
+}
+
+.icon{
+    font-size:32px;
+}
+
+.card h3{
+    font-size:13px;
+    color:#64748b;
+    margin-top:12px;
+}
+
+.number{
+    font-size:30px;
+    font-weight:bold;
+    color:#166534;
+    margin-top:5px;
+}
+
+.module-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.module{
+    padding:28px;
+    border-radius:17px;
+    color:white;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.module:hover{
+    transform:translateY(-4px);
+}
+
+.module h2{
+    margin-bottom:8px;
+}
+
+.opr{
+    background:#16a34a;
+}
+
+.evidens{
+    background:#ca8a04;
+}
+
+.panitia{
+    background:#15803d;
+}
+
+.bilik{
+    background:#eab308;
+    color:#17351f;
+}
+
+/* PANEL */
+
+.panel{
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.panel h2{
+    color:#166534;
+    margin-bottom:8px;
+}
+
+.panel-description{
+    color:#64748b;
+    margin-bottom:25px;
+}
+
+/* FORM */
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:bold;
+    color:#166534;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:15px;
+    background:white;
+}
+
+.form-group textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    outline:none;
+    border-color:#22c55e;
+    box-shadow:0 0 0 3px rgba(34,197,94,.15);
+}
+
+.save-btn{
+    background:#166534;
+    color:white;
+    border:none;
+    padding:13px 22px;
+    border-radius:8px;
+    font-size:15px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.save-btn:hover{
+    background:#14532d;
+}
+
+.reset-btn{
+    background:#facc15;
+    color:#17351f;
+    border:none;
+    padding:13px 22px;
+    border-radius:8px;
+    font-size:15px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-left:8px;
+}
+
+.delete-btn{
+    background:#dc2626;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.result{
+    margin-top:25px;
+    padding:20px;
+    background:#f0fdf4;
+    border-left:5px solid #22c55e;
+    border-radius:8px;
+    display:none;
+}
+
+.result h3{
+    color:#166534;
+    margin-bottom:12px;
+}
+
+.result p{
+    margin:7px 0;
+}
+
+/* SENARAI */
+
+.list{
+    margin-top:30px;
+}
+
+.list h2{
+    margin-bottom:15px;
+}
+
+.item{
+    background:#f8fafc;
+    border-left:5px solid #facc15;
+    padding:18px;
+    border-radius:8px;
+    margin-bottom:12px;
+}
+
+.item h3{
+    color:#166534;
+    margin-bottom:8px;
+}
+
+.item p{
+    margin:5px 0;
+}
+
+.empty{
+    padding:20px;
+    text-align:center;
+    color:#64748b;
+    background:#f8fafc;
+    border-radius:8px;
+}
+
+/* BILIK */
+
+.room-card{
+    background:#f8fafc;
+    padding:20px;
+    border-radius:10px;
+    margin-top:15px;
+    border-left:5px solid #22c55e;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    background:#dcfce7;
+    color:#166534;
+    font-size:13px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .module-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:500px){
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .reset-btn{
+        margin-left:0;
+        margin-top:8px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">🏫</div>
+
+        <h2>e-SMART SCHOOL</h2>
+
+        <p>Satu Portal, Empat Penyelesaian</p>
+
+    </div>
+
+    <div class="menu">
+
+        <button class="active"
+                onclick="showPage('dashboard')">
+            🏠 Dashboard
+        </button>
+
+        <button onclick="showPage('opr')">
+            📄 OPR
+        </button>
+
+        <button onclick="showPage('evidens')">
+            📁 Evidens SK@S
+        </button>
+
+        <button onclick="showPage('panitia')">
+            🗂️ Fail Panitia
+        </button>
+
+        <button onclick="showPage('bilik')">
+            🏢 Tempahan Bilik
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="topbar">
+
+        <h1 id="pageTitle">
+            Dashboard
+        </h1>
+
+        <div class="user">
+            👤 Admin Sekolah
+        </div>
+
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <section id="dashboard" class="page active">
+
+        <div class="welcome">
+
+            <h2>
+                Selamat Datang 👋
+            </h2>
+
+            <p>
+                SEKOLAH MENENGAH TINGGI
+            </p>
+
+            <p style="margin-top:8px;color:white;">
+                Sistem Pengurusan Digital Sekolah Bersepadu
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="icon">📄</div>
+                <h3>JUMLAH OPR</h3>
+                <div class="number" id="jumlahOPR">0</div>
+            </div>
+
+            <div class="card">
+                <div class="icon">📁</div>
+                <h3>EVIDENS SK@S</h3>
+                <div class="number" id="jumlahEvidens">0</div>
+            </div>
+
+            <div class="card">
+                <div class="icon">🗂️</div>
+                <h3>FAIL PANITIA</h3>
+                <div class="number" id="jumlahPanitia">0</div>
+            </div>
+
+            <div class="card">
+                <div class="icon">🏢</div>
+                <h3>TEMPAHAN BILIK</h3>
+                <div class="number" id="jumlahBilik">0</div>
+            </div>
+
+        </div>
+
+
+        <div class="module-grid">
+
+            <div class="module opr"
+                 onclick="showPage('opr')">
+
+                <h2>📄 OPR</h2>
+
+                <p>
+                    Pengurusan One Page Report secara digital.
+                </p>
+
+            </div>
+
+
+            <div class="module evidens"
+                 onclick="showPage('evidens')">
+
+                <h2>📁 Evidens SK@S</h2>
+
+                <p>
+                    Rekod dan susun evidens sekolah.
+                </p>
+
+            </div>
+
+
+            <div class="module panitia"
+                 onclick="showPage('panitia')">
+
+                <h2>🗂️ Fail Panitia</h2>
+
+                <p>
+                    Pengurusan dokumen panitia.
+                </p>
+
+            </div>
+
+
+            <div class="module bilik"
+                 onclick="showPage('bilik')">
+
+                <h2>🏢 Tempahan Bilik</h2>
+
+                <p>
+                    Tempahan bilik sekolah secara digital.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- OPR -->
+
+    <section id="opr" class="page">
+
+        <div class="panel">
+
+            <h2>📄 Pengurusan OPR</h2>
+
+            <p class="panel-description">
+                Isi maklumat One Page Report secara digital.
+            </p>
+
+
+            <div class="form-group">
+
+                <label>Nama Aktiviti</label>
+
+                <input
+                    type="text"
+                    id="oprAktiviti"
+                    placeholder="Contoh: Program STEM">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Tarikh</label>
+
+                <input
+                    type="date"
+                    id="oprTarikh">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Masa</label>
+
+                <input
+                    type="text"
+                    id="oprMasa"
+                    placeholder="Contoh: 8.00 pagi - 10.00 pagi">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Tempat</label>
+
+                <input
+                    type="text"
+                    id="oprTempat"
+                    placeholder="Contoh: Dewan Sekolah">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Anjuran</label>
+
+                <input
+                    type="text"
+                    id="oprAnjuran"
+                    placeholder="Contoh: Panitia Sains">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Ringkasan Aktiviti</label>
+
+                <textarea
+                    id="oprRingkasan"
+                    placeholder="Masukkan ringkasan aktiviti"></textarea>
+
+            </div>
+
+
+            <button class="save-btn"
+                    onclick="simpanOPR()">
+
+                💾 Simpan OPR
+
+            </button>
+
+
+            <button class="reset-btn"
+                    onclick="resetOPR()">
+
+                🔄 Kosongkan
+
+            </button>
+
+
+            <div id="oprResult"
+                 class="result">
+            </div>
+
+
+            <div class="list">
+
+                <h2>
+                    📋 Senarai OPR
+                </h2>
+
+                <div id="senaraiOPR">
+
+                    <div class="empty">
+                        Belum ada OPR direkodkan.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- EVIDENS -->
+
+    <section id="evidens" class="page">
+
+        <div class="panel">
+
+            <h2>📁 Evidens SK@S</h2>
+
+            <p class="panel-description">
+                Rekod dan susun evidens sekolah secara digital.
+            </p>
+
+
+            <div class="form-group">
+
+                <label>Standard / Elemen</label>
+
+                <select id="evidensStandard">
+
+                    <option value="">
+                        -- Pilih Standard --
+                    </option>
+
+                    <option>Standard 1</option>
+                    <option>Standard 2</option>
+                    <option>Standard 3</option>
+                    <option>Standard 4</option>
+                    <option>Standard 5</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Tajuk Evidens</label>
+
+                <input
+                    type="text"
+                    id="evidensTajuk"
+                    placeholder="Contoh: Program NILAM">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Tarikh</label>
+
+                <input
+                    type="date"
+                    id="evidensTarikh">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Catatan</label>
+
+                <textarea
+                    id="evidensCatatan"
+                    placeholder="Masukkan catatan evidens"></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Nama Fail / Pautan Evidens</label>
+
+                <input
+                    type="text"
+                    id="evidensFail"
+                    placeholder="Contoh: gambar_program.jpg">
+
+            </div>
+
+
+            <button class="save-btn"
+                    onclick="simpanEvidens()">
+
+                💾 Simpan Evidens
+
+            </button>
+
+
+            <button class="reset-btn"
+                    onclick="resetEvidens()">
+
+                🔄 Kosongkan
+
+            </button>
+
+
+            <div id="evidensResult"
+                 class="result">
+            </div>
+
+
+            <div class="list">
+
+                <h2>
+                    📋 Senarai Evidens
+                </h2>
+
+                <div id="senaraiEvidens">
+
+                    <div class="empty">
+                        Belum ada evidens direkodkan.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FAIL PANITIA -->
+
+    <section id="panitia" class="page">
+
+        <div class="panel">
+
+            <h2>🗂️ Fail Panitia</h2>
+
+            <p class="panel-description">
+                Pengurusan dokumen dan fail panitia secara digital.
+            </p>
+
+
+            <div class="form-group">
+
+                <label>Nama Panitia</label>
+
+                <select id="panitiaNama">
+
+                    <option value="">
+                        -- Pilih Panitia --
+                    </option>
+
+                    <option>Bahasa Melayu</option>
+                    <option>Bahasa Inggeris</option>
+                    <option>Matematik</option>
+                    <option>Sains</option>
+                    <option>Sejarah</option>
+                    <option>Geografi</option>
+                    <option>Pendidikan Islam</option>
+                    <option>Pendidikan Jasmani</option>
+                    <option>Reka Bentuk dan Teknologi</option>
+                    <option>Teknologi Maklumat</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Kategori Fail</label>
+
+                <select id="panitiaKategori">
+
+                    <option value="">
+                        -- Pilih Kategori --
+                    </option>
+
+                    <option>Minit Mesyuarat</option>
+                    <option>Perancangan Tahunan</option>
+                    <option>Program Panitia</option>
+                    <option>Pentaksiran</option>
+                    <option>Laporan</option>
+                    <option>Surat / Pekeliling</option>
+                    <option>Lain-lain</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Nama Dokumen</label>
+
+                <input
+                    type="text"
+                    id="panitiaDokumen"
+                    placeholder="Contoh: Minit Mesyuarat Panitia Bil. 1">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Tarikh Dokumen</label>
+
+                <input
+                    type="date"
+                    id="panitiaTarikh">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Nama Fail / Pautan</label>
+
+                <input
+                    type="text"
+                    id="panitiaFail"
+                    placeholder="Contoh: minit-panitia-bil1.pdf">
+
+            </div>
+
+
+            <button class="save-btn"
+                    onclick="simpanPanitia()">
+
+                💾 Simpan Fail
+
+            </button>
+
+
+            <button class="reset-btn"
+                    onclick="resetPanitia()">
+
+                🔄 Kosongkan
+
+            </button>
+
+
+            <div id="panitiaResult"
+                 class="result">
+            </div>
+
+
+            <div class="list">
+
+                <h2>
+                    📋 Senarai Fail Panitia
+                </h2>
+
+                <div id="senaraiPanitia">
+
+                    <div class="empty">
+                        Belum ada fail direkodkan.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TEMPAHAN BILIK -->
+
+    <section id="bilik" class="page">
+
+        <div class="panel">
+
+            <h2>🏢 Tempahan Bilik</h2>
+
+            <p class="panel-description">
+                Buat tempahan bilik sekolah secara digital.
+            </p>
+
+
+            <div class="form-group">
+
+                <label>Nama Pemohon</label>
+
+                <input
+                    type="text"
+                    id="bilikPemohon"
+                    placeholder="Contoh: Cikgu Ali">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Nama Bilik</label>
+
+                <select id="bilikNama">
+
+                    <option value="">
+                        -- Pilih Bilik --
+                    </option>
+
+                    <option>Dewan Sekolah</option>
+                    <option>Bilik Mesyuarat</option>
+                    <option>Makmal Sains</option>
+                    <option>Makmal Komputer</option>
+                    <option>Bilik Seminar</option>
+                    <option>Pusat Sumber</option>
+                    <option>Bilik AV</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Tarikh</label>
+
+                <input
+                    type="date"
+                    id="bilikTarikh">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Masa Mula</label>
+
+                <input
+                    type="time"
+                    id="bilikMasaMula">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Masa Tamat</label>
+
+                <input
+                    type="time"
+                    id="bilikMasaTamat">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Tujuan</label>
+
+                <textarea
+                    id="bilikTujuan"
+                    placeholder="Contoh: Mesyuarat Panitia Matematik"></textarea>
+
+            </div>
+
+
+            <button class="save-btn"
+                    onclick="simpanTempahan()">
+
+                🏢 Buat Tempahan
+
+            </button>
+
+
+            <button class="reset-btn"
+                    onclick="resetBilik()">
+
+                🔄 Kosongkan
+
+            </button>
+
+
+            <div id="bilikResult"
+                 class="result">
+            </div>
+
+
+            <div class="list">
+
+                <h2>
+                    📅 Senarai Tempahan
+                </h2>
+
+                <div id="senaraiBilik">
+
+                    <div class="empty">
+                        Belum ada tempahan.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+/* =========================
+   DATA
+========================= */
+
+let oprData =
+    JSON.parse(localStorage.getItem("oprData")) || [];
+
+let evidensData =
+    JSON.parse(localStorage.getItem("evidensData")) || [];
+
+let panitiaData =
+    JSON.parse(localStorage.getItem("panitiaData")) || [];
+
+let bilikData =
+    JSON.parse(localStorage.getItem("bilikData")) || [];
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPage(page){
+
+    const pages =
+        document.querySelectorAll(".page");
+
+    pages.forEach(function(item){
+
+        item.classList.remove("active");
+
+    });
+
+
+    document
+        .getElementById(page)
+        .classList.add("active");
+
+
+    const buttons =
+        document.querySelectorAll(".menu button");
+
+    buttons.forEach(function(button){
+
+        button.classList.remove("active");
+
+    });
+
+
+    const titles = {
+
+        dashboard:"Dashboard",
+        opr:"Pengurusan OPR",
+        evidens:"Evidens SK@S",
+        panitia:"Fail Panitia",
+        bilik:"Tempahan Bilik"
+
+    };
+
+
+    document
+        .getElementById("pageTitle")
+        .innerText = titles[page];
+
+
+    const numbers = {
+
+        dashboard:0,
+        opr:1,
+        evidens:2,
+        panitia:3,
+        bilik:4
+
+    };
+
+
+    buttons[numbers[page]]
+        .classList.add("active");
+
+}
+
+
+/* =========================
+   OPR
+========================= */
+
+function simpanOPR(){
+
+    const aktiviti =
+        document.getElementById("oprAktiviti").value;
+
+    const tarikh =
+        document.getElementById("oprTarikh").value;
+
+    const masa =
+        document.getElementById("oprMasa").value;
+
+    const tempat =
+        document.getElementById("oprTempat").value;
+
+    const anjuran =
+        document.getElementById("oprAnjuran").value;
+
+    const ringkasan =
+        document.getElementById("oprRingkasan").value;
+
+
+    if(
+        !aktiviti ||
+        !tarikh ||
+        !masa ||
+        !tempat ||
+        !anjuran ||
+        !ringkasan
+    ){
+
+        alert("Sila lengkapkan semua maklumat OPR.");
+
+        return;
+
+    }
+
+
+    const data = {
+
+        id:Date.now(),
+        aktiviti,
+        tarikh,
+        masa,
+        tempat,
+        anjuran,
+        ringkasan
+
+    };
+
+
+    oprData.push(data);
+
+    localStorage.setItem(
+        "oprData",
+        JSON.stringify(oprData)
+    );
+
+
+    document.getElementById("oprResult")
+        .style.display = "block";
+
+
+    document.getElementById("oprResult")
+        .innerHTML =
+
+        "<h3>✅ OPR berjaya disimpan</h3>" +
+
+        "<p><strong>Aktiviti:</strong> " +
+        aktiviti + "</p>" +
+
+        "<p><strong>Tarikh:</strong> " +
+        tarikh + "</p>";
+
+
+    resetOPR(false);
+
+    renderOPR();
+
+    updateDashboard();
+
+}
+
+
+function resetOPR(hide=true){
+
+    document.getElementById("oprAktiviti").value = "";
+
+    document.getElementById("oprTarikh").value = "";
+
+    document.getElementById("oprMasa").value = "";
+
+    document.getElementById("oprTempat").value = "";
+
+    document.getElementById("oprAnjuran").value = "";
+
+    document.getElementById("oprRingkasan").value = "";
+
+    if(hide){
+
+        document.getElementById("oprResult")
+            .style.display = "none";
+
+    }
+
+}
+
+
+function renderOPR(){
+
+    const box =
+        document.getElementById("senaraiOPR");
+
+
+    if(oprData.length === 0){
+
+        box.innerHTML =
+            '<div class="empty">Belum ada OPR direkodkan.</div>';
+
+        return;
+
+    }
+
+
+    box.innerHTML = "";
+
+
+    oprData.slice().reverse().forEach(function(item){
+
+        box.innerHTML +=
+
+        '<div class="item">' +
+
+        '<h3>📄 ' + item.aktiviti + '</h3>' +
+
+        '<p><strong>Tarikh:</strong> ' +
+        item.tarikh + '</p>' +
+
+        '<p><strong>Masa:</strong> ' +
+        item.masa + '</p>' +
+
+        '<p><strong>Tempat:</strong> ' +
+        item.tempat + '</p>' +
+
+        '<p><strong>Anjuran:</strong> ' +
+        item.anjuran + '</p>' +
+
+        '<button class="delete-btn" onclick="padamOPR(' +
+        item.id + ')">Padam</button>' +
+
+        '</div>';
+
+    });
+
+}
+
+
+function padamOPR(id){
+
+    oprData =
+        oprData.filter(function(item){
+
+            return item.id !== id;
+
+        });
+
+
+    localStorage.setItem(
+        "oprData",
+        JSON.stringify(oprData)
+    );
+
+
+    renderOPR();
+
+    updateDashboard();
+
+}
+
+
+/* =========================
+   EVIDENS
+========================= */
+
+function simpanEvidens(){
+
+    const standard =
+        document.getElementById("evidensStandard").value;
+
+    const tajuk =
+        document.getElementById("evidensTajuk").value;
+
+    const tarikh =
+        document.getElementById("evidensTarikh").value;
+
+    const catatan =
+        document.getElementById("evidensCatatan").value;
+
+    const fail =
+        document.getElementById("evidensFail").value;
+
+
+    if(
+        !standard ||
+        !tajuk ||
+        !tarikh ||
+        !catatan ||
+        !fail
+    ){
+
+        alert(
+            "Sila lengkapkan semua maklumat evidens."
+        );
+
+        return;
+
+    }
+
+
+    const data = {
+
+        id:Date.now(),
+        standard,
+        tajuk,
+        tarikh,
+        catatan,
+        fail
+
+    };
+
+
+    evidensData.push(data);
+
+
+    localStorage.setItem(
+        "evidensData",
+        JSON.stringify(evidensData)
+    );
+
+
+    document.getElementById("evidensResult")
+        .style.display = "block";
+
+
+    document.getElementById("evidensResult")
+        .innerHTML =
+
+        "<h3>✅ Evidens berjaya direkodkan</h3>" +
+
+        "<p><strong>Tajuk:</strong> " +
+        tajuk + "</p>" +
+
+        "<p><strong>Standard:</strong> " +
+        standard + "</p>";
+
+
+    resetEvidens(false);
+
+    renderEvidens();
+
+    updateDashboard();
+
+}
+
+
+function resetEvidens(hide=true){
+
+    document.getElementById("evidensStandard").value = "";
+
+    document.getElementById("evidensTajuk").value = "";
+
+    document.getElementById("evidensTarikh").value = "";
+
+    document.getElementById("evidensCatatan").value = "";
+
+    document.getElementById("evidensFail").value = "";
+
+    if(hide){
+
+        document.getElementById("evidensResult")
+            .style.display = "none";
+
+    }
+
+}
+
+
+function renderEvidens(){
+
+    const box =
+        document.getElementById("senaraiEvidens");
+
+
+    if(evidensData.length === 0){
+
+        box.innerHTML =
+            '<div class="empty">Belum ada evidens direkodkan.</div>';
+
+        return;
+
+    }
+
+
+    box.innerHTML = "";
+
+
+    evidensData.slice().reverse().forEach(function(item){
+
+        box.innerHTML +=
+
+        '<div class="item">' +
+
+        '<h3>📁 ' + item.tajuk + '</h3>' +
+
+        '<p><strong>Standard:</strong> ' +
+        item.standard + '</p>' +
+
+        '<p><strong>Tarikh:</strong> ' +
+        item.tarikh + '</p>' +
+
+        '<p><strong>Catatan:</strong> ' +
+        item.catatan + '</p>' +
+
+        '<p><strong>Fail:</strong> ' +
+        item.fail + '</p>' +
+
+        '<button class="delete-btn" onclick="padamEvidens(' +
+        item.id + ')">Padam</button>' +
+
+        '</div>';
+
+    });
+
+}
+
+
+function padamEvidens(id){
+
+    evidensData =
+        evidensData.filter(function(item){
+
+            return item.id !== id;
+
+        });
+
+
+    localStorage.setItem(
+        "evidensData",
+        JSON.stringify(evidensData)
+    );
+
+
+    renderEvidens();
+
+    updateDashboard();
+
+}
+
+
+/* =========================
+   PANITIA
+========================= */
+
+function simpanPanitia(){
+
+    const panitia =
+        document.getElementById("panitiaNama").value;
+
+    const kategori =
+        document.getElementById("panitiaKategori").value;
+
+    const dokumen =
+        document.getElementById("panitiaDokumen").value;
+
+    const tarikh =
+        document.getElementById("panitiaTarikh").value;
+
+    const fail =
+        document.getElementById("panitiaFail").value;
+
+
+    if(
+        !panitia ||
+        !kategori ||
+        !dokumen ||
+        !tarikh ||
+        !fail
+    ){
+
+        alert(
+            "Sila lengkapkan semua maklumat fail."
+        );
+
+        return;
+
+    }
+
+
+    const data = {
+
+        id:Date.now(),
+        panitia,
+        kategori,
+        dokumen,
+        tarikh,
+        fail
+
+    };
+
+
+    panitiaData.push(data);
+
+
+    localStorage.setItem(
+        "panitiaData",
+        JSON.stringify(panitiaData)
+    );
+
+
+    document.getElementById("panitiaResult")
+        .style.display = "block";
+
+
+    document.getElementById("panitiaResult")
+        .innerHTML =
+
+        "<h3>✅ Fail berjaya direkodkan</h3>" +
+
+        "<p><strong>Panitia:</strong> " +
+        panitia + "</p>" +
+
+        "<p><strong>Dokumen:</strong> " +
+        dokumen + "</p>";
+
+
+    resetPanitia(false);
+
+    renderPanitia();
+
+    updateDashboard();
+
+}
+
+
+function resetPanitia(hide=true){
+
+    document.getElementById("panitiaNama").value = "";
+
+    document.getElementById("panitiaKategori").value = "";
+
+    document.getElementById("panitiaDokumen").value = "";
+
+    document.getElementById("panitiaTarikh").value = "";
+
+    document.getElementById("panitiaFail").value = "";
+
+    if(hide){
+
+        document.getElementById("panitiaResult")
+            .style.display = "none";
+
+    }
+
+}
+
+
+function renderPanitia(){
+
+    const box =
+        document.getElementById("senaraiPanitia");
+
+
+    if(panitiaData.length === 0){
+
+        box.innerHTML =
+            '<div class="empty">Belum ada fail direkodkan.</div>';
+
+        return;
+
+    }
+
+
+    box.innerHTML = "";
+
+
+    panitiaData.slice().reverse().forEach(function(item){
+
+        box.innerHTML +=
+
+        '<div class="item">' +
+
+        '<h3>🗂️ ' + item.dokumen + '</h3>' +
+
+        '<p><strong>Panitia:</strong> ' +
+        item.panitia + '</p>' +
+
+        '<p><strong>Kategori:</strong> ' +
+        item.kategori + '</p>' +
+
+        '<p><strong>Tarikh:</strong> ' +
+        item.tarikh + '</p>' +
+
+        '<p><strong>Fail:</strong> ' +
+        item.fail + '</p>' +
+
+        '<button class="delete-btn" onclick="padamPanitia(' +
+        item.id + ')">Padam</button>' +
+
+        '</div>';
+
+    });
+
+}
+
+
+function padamPanitia(id){
+
+    panitiaData =
+        panitiaData.filter(function(item){
+
+            return item.id !== id;
+
+        });
+
+
+    localStorage.setItem(
+        "panitiaData",
+        JSON.stringify(panitiaData)
+    );
+
+
+    renderPanitia();
+
+    updateDashboard();
+
+}
+
+
+/* =========================
+   TEMPAHAN BILIK
+========================= */
+
+function simpanTempahan(){
+
+    const pemohon =
+        document.getElementById("bilikPemohon").value;
+
+    const bilik =
+        document.getElementById("bilikNama").value;
+
+    const tarikh =
+        document.getElementById("bilikTarikh").value;
+
+    const mula =
+        document.getElementById("bilikMasaMula").value;
+
+    const tamat =
+        document.getElementById("bilikMasaTamat").value;
+
+    const tujuan =
+        document.getElementById("bilikTujuan").value;
+
+
+    if(
+        !pemohon ||
+        !bilik ||
+        !tarikh ||
+        !mula ||
+        !tamat ||
+        !tujuan
+    ){
+
+        alert(
+            "Sila lengkapkan semua maklumat tempahan."
+        );
+
+        return;
+
+    }
+
+
+    if(mula >= tamat){
+
+        alert(
+            "Masa tamat mestilah selepas masa mula."
+        );
+
+        return;
+
+    }
+
+
+    const konflik =
+        bilikData.some(function(item){
+
+            return(
+                item.bilik === bilik &&
+                item.tarikh === tarikh &&
+                (
+                    mula < item.tamat &&
+                    tamat > item.mula
+                )
+            );
+
+        });
+
+
+    if(konflik){
+
+        alert(
+            "⚠️ Bilik tersebut sudah ditempah pada waktu berkenaan."
+        );
+
+        return;
+
+    }
+
+
+    const data = {
+
+        id:Date.now(),
+        pemohon,
+        bilik,
+        tarikh,
+        mula,
+        tamat,
+        tujuan
+
+    };
+
+
+    bilikData.push(data);
+
+
+    localStorage.setItem(
+        "bilikData",
+        JSON.stringify(bilikData)
+    );
+
+
+    document.getElementById("bilikResult")
+        .style.display = "block";
+
+
+    document.getElementById("bilikResult")
+        .innerHTML =
+
+        "<h3>✅ Tempahan berjaya dibuat</h3>" +
+
+        "<p><strong>Bilik:</strong> " +
+        bilik + "</p>" +
+
+        "<p><strong>Tarikh:</strong> " +
+        tarikh + "</p>" +
+
+        "<p><strong>Masa:</strong> " +
+        mula + " - " + tamat + "</p>";
+
+
+    resetBilik(false);
+
+    renderBilik();
+
+    updateDashboard();
+
+}
+
+
+function resetBilik(hide=true){
+
+    document.getElementById("bilikPemohon").value = "";
+
+    document.getElementById("bilikNama").value = "";
+
+    document.getElementById("bilikTarikh").value = "";
+
+    document.getElementById("bilikMasaMula").value = "";
+
+    document.getElementById("bilikMasaTamat").value = "";
+
+    document.getElementById("bilikTujuan").value = "";
+
+    if(hide){
+
+        document.getElementById("bilikResult")
+            .style.display = "none";
+
+    }
+
+}
+
+
+function renderBilik(){
+
+    const box =
+        document.getElementById("senaraiBilik");
+
+
+    if(bilikData.length === 0){
+
+        box.innerHTML =
+            '<div class="empty">Belum ada tempahan.</div>';
+
+        return;
+
+    }
+
+
+    box.innerHTML = "";
+
+
+    bilikData.slice().reverse().forEach(function(item){
+
+        box.innerHTML +=
+
+        '<div class="room-card">' +
+
+        '<h3>🏢 ' + item.bilik + '</h3>' +
+
+        '<p><strong>Pemohon:</strong> ' +
+        item.pemohon + '</p>' +
+
+        '<p><strong>Tarikh:</strong> ' +
+        item.tarikh + '</p>' +
+
+        '<p><strong>Masa:</strong> ' +
+        item.mula + ' - ' +
+        item.tamat + '</p>' +
+
+        '<p><strong>Tujuan:</strong> ' +
+        item.tujuan + '</p>' +
+
+        '<span class="status">✅ Ditempah</span>' +
+
+        '<br>' +
+
+        '<button class="delete-btn" onclick="padamTempahan(' +
+        item.id + ')">Batalkan</button>' +
+
+        '</div>';
+
+    });
+
+}
+
+
+function padamTempahan(id){
+
+    bilikData =
+        bilikData.filter(function(item){
+
+            return item.id !== id;
+
+        });
+
+
+    localStorage.setItem(
+        "bilikData",
+        JSON.stringify(bilikData)
+    );
+
+
+    renderBilik();
+
+    updateDashboard();
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function updateDashboard(){
+
+    document.getElementById("jumlahOPR")
+        .innerText = oprData.length;
+
+    document.getElementById("jumlahEvidens")
+        .innerText = evidensData.length;
+
+    document.getElementById("jumlahPanitia")
+        .innerText = panitiaData.length;
+
+    document.getElementById("jumlahBilik")
+        .innerText = bilikData.length;
+
+}
+
+
+/* =========================
+   MULA SISTEM
+========================= */
+
+renderOPR();
+
+renderEvidens();
+
+renderPanitia();
+
+renderBilik();
+
+updateDashboard();
+
+</script>
+
+</body>
+</html>
