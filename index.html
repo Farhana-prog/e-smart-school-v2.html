@@ -2217,29 +2217,6 @@ async function checkUser(){
     currentUser = data.user;
 
 
-    if(!currentUser.user_metadata.school_name){
-
-        const { data: updatedData, error: updateError } =
-            await supabaseClient.auth.updateUser({
-
-                data: {
-
-                    school_name: "SMK Tinggi Batu Pahat"
-
-                }
-
-            });
-
-
-        if(!updateError && updatedData.user){
-
-            currentUser = updatedData.user;
-
-        }
-
-    }
-
-
     const firstName =
         currentUser.user_metadata.first_name || "";
 
