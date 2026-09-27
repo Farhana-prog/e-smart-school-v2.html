@@ -502,9 +502,9 @@ body{
 
         <div class="welcome">
 
-            <h2>
-                Selamat Datang 👋
-            </h2>
+            <h2 id="welcomeMessage">
+    Selamat Datang 👋
+</h2>
 
             <p>
                 SEKOLAH MENENGAH TINGGI
@@ -2039,7 +2039,9 @@ async function checkUser(){
 
     document.getElementById("userName").innerHTML =
         "👤 " + (fullName || "Guru");
-
+    
+document.getElementById("welcomeMessage").innerHTML =
+    "Selamat Datang, Cikgu " + (firstName || "Guru") + " 👋";
 }
 
 
