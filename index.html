@@ -1356,8 +1356,7 @@ let evidensData =
 let panitiaData =
     JSON.parse(localStorage.getItem("panitiaData")) || [];
 
-let bilikData =
-    JSON.parse(localStorage.getItem("bilikData")) || [];
+let bilikData = [];
 
 
 /* =========================
@@ -1964,15 +1963,14 @@ function padamPanitia(id){
 
 }
 
-
 /* =========================
    TEMPAHAN BILIK
 ========================= */
 
-function simpanTempahan(){
+async function simpanTempahan(){
 
     const pemohon =
-        document.getElementById("bilikPemohon").value;
+        document.getElementById("bilikPemohon").value.trim();
 
     const bilik =
         document.getElementById("bilikNama").value;
@@ -1987,7 +1985,7 @@ function simpanTempahan(){
         document.getElementById("bilikMasaTamat").value;
 
     const tujuan =
-        document.getElementById("bilikTujuan").value;
+        document.getElementById("bilikTujuan").value.trim();
 
 
     if(
@@ -2019,16 +2017,46 @@ function simpanTempahan(){
     }
 
 
+    if(!currentUser){
+
+        alert(
+            "Sesi pengguna tidak ditemui. Sila login semula."
+        );
+
+        return;
+
+    }
+
+
+    /* SEMAK TEMPAHAN SEDIA ADA */
+
+    const { data: tempahanSediaAda, error: checkError } =
+        await supabaseClient
+            .from("tempahan_bilik")
+            .select("*")
+            .eq("bilik", bilik)
+            .eq("tarikh", tarikh);
+
+
+    if(checkError){
+
+        console.error(checkError);
+
+        alert(
+            "Gagal menyemak tempahan. Sila cuba lagi."
+        );
+
+        return;
+
+    }
+
+
     const konflik =
-        bilikData.some(function(item){
+        tempahanSediaAda.some(function(item){
 
             return(
-                item.bilik === bilik &&
-                item.tarikh === tarikh &&
-                (
-                    mula < item.tamat &&
-                    tamat > item.mula
-                )
+                mula < item.tamat &&
+                tamat > item.mula
             );
 
         });
@@ -2045,27 +2073,46 @@ function simpanTempahan(){
     }
 
 
-    const data = {
+    /* SIMPAN KE SUPABASE */
 
-        id:Date.now(),
-        pemohon,
-        bilik,
-        tarikh,
-        mula,
-        tamat,
-        tujuan
+    const { data, error } =
+        await supabaseClient
+            .from("tempahan_bilik")
+            .insert({
 
-    };
+                user_id: currentUser.id,
+
+                pemohon: pemohon,
+
+                bilik: bilik,
+
+                tarikh: tarikh,
+
+                mula: mula,
+
+                tamat: tamat,
+
+                tujuan: tujuan
+
+            })
+            .select()
+            .single();
 
 
-    bilikData.push(data);
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "Tempahan gagal disimpan. Sila cuba lagi."
+        );
+
+        return;
+
+    }
 
 
-    localStorage.setItem(
-        "bilikData",
-        JSON.stringify(bilikData)
-    );
-
+    /* PAPAR MESEJ BERJAYA */
 
     document.getElementById("bilikResult")
         .style.display = "block";
@@ -2083,12 +2130,13 @@ function simpanTempahan(){
         tarikh + "</p>" +
 
         "<p><strong>Masa:</strong> " +
-        mula + " - " + tamat + "</p>";
+        mula + " - " +
+        tamat + "</p>";
 
 
     resetBilik(false);
 
-    renderBilik();
+    await loadBilik();
 
     updateDashboard();
 
@@ -2109,6 +2157,7 @@ function resetBilik(hide=true){
 
     document.getElementById("bilikTujuan").value = "";
 
+
     if(hide){
 
         document.getElementById("bilikResult")
@@ -2118,6 +2167,46 @@ function resetBilik(hide=true){
 
 }
 
+
+/* =========================
+   LOAD TEMPAHAN
+========================= */
+
+async function loadBilik(){
+
+    const { data, error } =
+        await supabaseClient
+            .from("tempahan_bilik")
+            .select("*")
+            .order("created_at", {
+                ascending:false
+            });
+
+
+    if(error){
+
+        console.error(error);
+
+        document.getElementById("senaraiBilik").innerHTML =
+            '<div class="empty">Gagal memuatkan tempahan.</div>';
+
+        return;
+
+    }
+
+
+    bilikData = data || [];
+
+    renderBilik();
+
+    updateDashboard();
+
+}
+
+
+/* =========================
+   PAPAR TEMPAHAN
+========================= */
 
 function renderBilik(){
 
@@ -2138,7 +2227,7 @@ function renderBilik(){
     box.innerHTML = "";
 
 
-    bilikData.slice().reverse().forEach(function(item){
+    bilikData.forEach(function(item){
 
         box.innerHTML +=
 
@@ -2163,8 +2252,21 @@ function renderBilik(){
 
         '<br>' +
 
-        '<button class="delete-btn" onclick="padamTempahan(' +
-        item.id + ')">Batalkan</button>' +
+        (
+            currentUser &&
+            item.user_id === currentUser.id
+
+            ?
+
+            '<button class="delete-btn" onclick="padamTempahan(' +
+            item.id +
+            ')">Batalkan</button>'
+
+            :
+
+            ''
+
+        ) +
 
         '</div>';
 
@@ -2173,25 +2275,45 @@ function renderBilik(){
 }
 
 
-function padamTempahan(id){
+/* =========================
+   BATAL TEMPAHAN
+========================= */
 
-    bilikData =
-        bilikData.filter(function(item){
+async function padamTempahan(id){
 
-            return item.id !== id;
+    if(!currentUser){
 
-        });
+        alert(
+            "Sesi pengguna tidak ditemui."
+        );
+
+        return;
+
+    }
 
 
-    localStorage.setItem(
-        "bilikData",
-        JSON.stringify(bilikData)
-    );
+    const { error } =
+        await supabaseClient
+            .from("tempahan_bilik")
+            .delete()
+            .eq("id", id)
+            .eq("user_id", currentUser.id);
 
 
-    renderBilik();
+    if(error){
 
-    updateDashboard();
+        console.error(error);
+
+        alert(
+            "Tempahan gagal dibatalkan."
+        );
+
+        return;
+
+    }
+
+
+    await loadBilik();
 
 }
 
@@ -2513,17 +2635,23 @@ async function logout(){
 
 }
 
-checkUser();
-    
-renderOPR();
+async function mulaSistem(){
 
-renderEvidens();
+    await checkUser();
 
-renderPanitia();
+    renderOPR();
 
-renderBilik();
+    renderEvidens();
 
-updateDashboard();
+    renderPanitia();
+
+    await loadBilik();
+
+    updateDashboard();
+
+}
+
+mulaSistem();
 
 </script>
 </body>
