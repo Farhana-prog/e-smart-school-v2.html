@@ -2206,8 +2206,6 @@ async function checkUser(){
     const { data, error } =
         await supabaseClient.auth.getUser();
 
-    currentUser = data.user;
-
     if(error || !data.user){
 
         window.location.href = "login.html";
@@ -2216,20 +2214,51 @@ async function checkUser(){
 
     }
 
+    currentUser = data.user;
+
+
+    if(!currentUser.user_metadata.school_name){
+
+        const { data: updatedData, error: updateError } =
+            await supabaseClient.auth.updateUser({
+
+                data: {
+
+                    school_name: "SMK Tinggi Batu Pahat"
+
+                }
+
+            });
+
+
+        if(!updateError && updatedData.user){
+
+            currentUser = updatedData.user;
+
+        }
+
+    }
+
+
     const firstName =
-        data.user.user_metadata.first_name || "";
+        currentUser.user_metadata.first_name || "";
 
     const lastName =
-        data.user.user_metadata.last_name || "";
+        currentUser.user_metadata.last_name || "";
 
     const fullName =
         (firstName + " " + lastName).trim();
 
-   document.getElementById("userName").innerHTML =
-    (fullName || "Guru");
-    
-document.getElementById("welcomeMessage").innerHTML =
-    "Selamat Datang, Cikgu " + (firstName || "Guru") + " 👋";
+
+    document.getElementById("userName").innerHTML =
+        (fullName || "Guru");
+
+
+    document.getElementById("welcomeMessage").innerHTML =
+        "Selamat Datang, Cikgu " +
+        (firstName || "Guru") +
+        " 👋";
+
 }
 
 
