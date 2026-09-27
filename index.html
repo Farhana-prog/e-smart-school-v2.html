@@ -1347,17 +1347,10 @@ body{
    DATA
 ========================= */
 
-let oprData =
-    JSON.parse(localStorage.getItem("oprData")) || [];
-
-let evidensData =
-    JSON.parse(localStorage.getItem("evidensData")) || [];
-
-let panitiaData =
-    JSON.parse(localStorage.getItem("panitiaData")) || [];
-
+let oprData = [];
+let evidensData = [];
+let panitiaData = [];
 let bilikData = [];
-
 
 /* =========================
    NAVIGATION
@@ -1421,11 +1414,6 @@ function showPage(page){
         .classList.add("active");
 
 }
-
-
-/* =========================
-   OPR
-========================= */
 
 /* =========================
    OPR
@@ -2000,12 +1988,11 @@ async function padamEvidens(id){
 
 }
 
-
 /* =========================
    PANITIA
 ========================= */
 
-function simpanPanitia(){
+async function simpanPanitia(){
 
     const panitia =
         document.getElementById("panitiaNama").value;
@@ -2014,13 +2001,13 @@ function simpanPanitia(){
         document.getElementById("panitiaKategori").value;
 
     const dokumen =
-        document.getElementById("panitiaDokumen").value;
+        document.getElementById("panitiaDokumen").value.trim();
 
     const tarikh =
         document.getElementById("panitiaTarikh").value;
 
     const fail =
-        document.getElementById("panitiaFail").value;
+        document.getElementById("panitiaFail").value.trim();
 
 
     if(
@@ -2040,25 +2027,50 @@ function simpanPanitia(){
     }
 
 
-    const data = {
+    if(!currentUser){
 
-        id:Date.now(),
-        panitia,
-        kategori,
-        dokumen,
-        tarikh,
-        fail
+        alert(
+            "Sesi pengguna tidak ditemui. Sila login semula."
+        );
 
-    };
+        return;
 
-
-    panitiaData.push(data);
+    }
 
 
-    localStorage.setItem(
-        "panitiaData",
-        JSON.stringify(panitiaData)
-    );
+    const { data, error } =
+        await supabaseClient
+            .from("panitia")
+            .insert({
+
+                user_id: currentUser.id,
+
+                panitia: panitia,
+
+                kategori: kategori,
+
+                dokumen: dokumen,
+
+                tarikh: tarikh,
+
+                fail: fail
+
+            })
+            .select()
+            .single();
+
+
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "Fail panitia gagal disimpan. Sila cuba lagi."
+        );
+
+        return;
+
+    }
 
 
     document.getElementById("panitiaResult")
@@ -2079,7 +2091,7 @@ function simpanPanitia(){
 
     resetPanitia(false);
 
-    renderPanitia();
+    await loadPanitia();
 
     updateDashboard();
 
@@ -2098,6 +2110,7 @@ function resetPanitia(hide=true){
 
     document.getElementById("panitiaFail").value = "";
 
+
     if(hide){
 
         document.getElementById("panitiaResult")
@@ -2107,6 +2120,46 @@ function resetPanitia(hide=true){
 
 }
 
+
+/* =========================
+   LOAD PANITIA
+========================= */
+
+async function loadPanitia(){
+
+    const { data, error } =
+        await supabaseClient
+            .from("panitia")
+            .select("*")
+            .order("created_at", {
+                ascending:false
+            });
+
+
+    if(error){
+
+        console.error(error);
+
+        document.getElementById("senaraiPanitia").innerHTML =
+            '<div class="empty">Gagal memuatkan fail panitia.</div>';
+
+        return;
+
+    }
+
+
+    panitiaData = data || [];
+
+    renderPanitia();
+
+    updateDashboard();
+
+}
+
+
+/* =========================
+   PAPAR PANITIA
+========================= */
 
 function renderPanitia(){
 
@@ -2127,7 +2180,7 @@ function renderPanitia(){
     box.innerHTML = "";
 
 
-    panitiaData.slice().reverse().forEach(function(item){
+    panitiaData.forEach(function(item){
 
         box.innerHTML +=
 
@@ -2147,8 +2200,21 @@ function renderPanitia(){
         '<p><strong>Fail:</strong> ' +
         item.fail + '</p>' +
 
-        '<button class="delete-btn" onclick="padamPanitia(' +
-        item.id + ')">Padam</button>' +
+        (
+            currentUser &&
+            item.user_id === currentUser.id
+
+            ?
+
+            '<button class="delete-btn" onclick="padamPanitia(' +
+            item.id +
+            ')">Padam</button>'
+
+            :
+
+            ''
+
+        ) +
 
         '</div>';
 
@@ -2157,25 +2223,45 @@ function renderPanitia(){
 }
 
 
-function padamPanitia(id){
+/* =========================
+   PADAM PANITIA
+========================= */
 
-    panitiaData =
-        panitiaData.filter(function(item){
+async function padamPanitia(id){
 
-            return item.id !== id;
+    if(!currentUser){
 
-        });
+        alert(
+            "Sesi pengguna tidak ditemui."
+        );
+
+        return;
+
+    }
 
 
-    localStorage.setItem(
-        "panitiaData",
-        JSON.stringify(panitiaData)
-    );
+    const { error } =
+        await supabaseClient
+            .from("panitia")
+            .delete()
+            .eq("id", id)
+            .eq("user_id", currentUser.id);
 
 
-    renderPanitia();
+    if(error){
 
-    updateDashboard();
+        console.error(error);
+
+        alert(
+            "Fail panitia gagal dipadam."
+        );
+
+        return;
+
+    }
+
+
+    await loadPanitia();
 
 }
 
@@ -2601,7 +2687,7 @@ async function checkUser(){
         (firstName + " " + lastName).trim();
 
 
-    document.getElementById("userName").innerHTML =
+    document.getElementById("userName").textContent =
         (fullName || "Guru");
     const topProfileImage =
     document.getElementById("topProfileImage");
@@ -2855,14 +2941,14 @@ async function mulaSistem(){
 
     await checkUser();
 
-  await loadOPR();
+    await loadOPR();
 
-await loadEvidens();
+    await loadEvidens();
 
-renderPanitia();
+    await loadPanitia();
 
-await loadBilik();
-
+    await loadBilik();
+    
     updateDashboard();
 
 }
