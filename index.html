@@ -546,7 +546,7 @@ body{
     </button>
 
    <div id="userDropdown" style="
-    display:block;
+    display:none;
     position:absolute;
         right:0;
         top:50px;
@@ -2136,15 +2136,67 @@ async function checkUser(){
     const fullName =
         (firstName + " " + lastName).trim();
 
-    document.getElementById("userName").innerHTML =
-        "👤 " + (fullName || "Guru");
+   document.getElementById("userName").innerHTML =
+    (fullName || "Guru");
     
 document.getElementById("welcomeMessage").innerHTML =
     "Selamat Datang, Cikgu " + (firstName || "Guru") + " 👋";
 }
 
 
-async function logout(){
+function toggleUserMenu(){
+
+    const menu = document.getElementById("userDropdown");
+
+    if(menu.style.display === "block"){
+        menu.style.display = "none";
+    } else {
+        menu.style.display = "block";
+    }
+
+}
+    function showProfile(){
+
+    const user = currentUser;
+
+    if(!user){
+        return;
+    }
+
+    const firstName =
+        user.user_metadata.first_name || "";
+
+    const lastName =
+        user.user_metadata.last_name || "";
+
+    const fullName =
+        (firstName + " " + lastName).trim();
+
+    document.getElementById("profileName").textContent =
+        "Cikgu " + (fullName || "Guru");
+
+    document.getElementById("profileEmail").textContent =
+        user.email || "-";
+
+    document.getElementById("profileSchool").textContent =
+        "Nama sekolah anda";
+
+    document.getElementById("profileModal").style.display =
+        "flex";
+
+    document.getElementById("userDropdown").style.display =
+        "none";
+
+}
+
+
+function closeProfile(){
+
+    document.getElementById("profileModal").style.display =
+        "none";
+
+}
+    async function logout(){
 
     await supabaseClient.auth.signOut();
 
