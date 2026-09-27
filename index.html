@@ -1427,25 +1427,29 @@ function showPage(page){
    OPR
 ========================= */
 
-function simpanOPR(){
+/* =========================
+   OPR
+========================= */
+
+async function simpanOPR(){
 
     const aktiviti =
-        document.getElementById("oprAktiviti").value;
+        document.getElementById("oprAktiviti").value.trim();
 
     const tarikh =
         document.getElementById("oprTarikh").value;
 
     const masa =
-        document.getElementById("oprMasa").value;
+        document.getElementById("oprMasa").value.trim();
 
     const tempat =
-        document.getElementById("oprTempat").value;
+        document.getElementById("oprTempat").value.trim();
 
     const anjuran =
-        document.getElementById("oprAnjuran").value;
+        document.getElementById("oprAnjuran").value.trim();
 
     const ringkasan =
-        document.getElementById("oprRingkasan").value;
+        document.getElementById("oprRingkasan").value.trim();
 
 
     if(
@@ -1457,33 +1461,66 @@ function simpanOPR(){
         !ringkasan
     ){
 
-        alert("Sila lengkapkan semua maklumat OPR.");
+        alert(
+            "Sila lengkapkan semua maklumat OPR."
+        );
 
         return;
 
     }
 
 
-    const data = {
+    if(!currentUser){
 
-        id:Date.now(),
-        aktiviti,
-        tarikh,
-        masa,
-        tempat,
-        anjuran,
-        ringkasan
+        alert(
+            "Sesi pengguna tidak ditemui. Sila login semula."
+        );
 
-    };
+        return;
+
+    }
 
 
-    oprData.push(data);
+    /* SIMPAN KE SUPABASE */
 
-    localStorage.setItem(
-        "oprData",
-        JSON.stringify(oprData)
-    );
+    const { data, error } =
+        await supabaseClient
+            .from("opr")
+            .insert({
 
+                user_id: currentUser.id,
+
+                aktiviti: aktiviti,
+
+                tarikh: tarikh,
+
+                masa: masa,
+
+                tempat: tempat,
+
+                anjuran: anjuran,
+
+                ringkasan: ringkasan
+
+            })
+            .select()
+            .single();
+
+
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "OPR gagal disimpan. Sila cuba lagi."
+        );
+
+        return;
+
+    }
+
+
+    /* PAPAR MESEJ BERJAYA */
 
     document.getElementById("oprResult")
         .style.display = "block";
@@ -1503,7 +1540,7 @@ function simpanOPR(){
 
     resetOPR(false);
 
-    renderOPR();
+    await loadOPR();
 
     updateDashboard();
 
@@ -1524,6 +1561,7 @@ function resetOPR(hide=true){
 
     document.getElementById("oprRingkasan").value = "";
 
+
     if(hide){
 
         document.getElementById("oprResult")
@@ -1533,6 +1571,46 @@ function resetOPR(hide=true){
 
 }
 
+
+/* =========================
+   LOAD OPR
+========================= */
+
+async function loadOPR(){
+
+    const { data, error } =
+        await supabaseClient
+            .from("opr")
+            .select("*")
+            .order("created_at", {
+                ascending:false
+            });
+
+
+    if(error){
+
+        console.error(error);
+
+        document.getElementById("senaraiOPR").innerHTML =
+            '<div class="empty">Gagal memuatkan OPR.</div>';
+
+        return;
+
+    }
+
+
+    oprData = data || [];
+
+    renderOPR();
+
+    updateDashboard();
+
+}
+
+
+/* =========================
+   PAPAR OPR
+========================= */
 
 function renderOPR(){
 
@@ -1553,7 +1631,7 @@ function renderOPR(){
     box.innerHTML = "";
 
 
-    oprData.slice().reverse().forEach(function(item){
+    oprData.forEach(function(item){
 
         box.innerHTML +=
 
@@ -1573,8 +1651,24 @@ function renderOPR(){
         '<p><strong>Anjuran:</strong> ' +
         item.anjuran + '</p>' +
 
-        '<button class="delete-btn" onclick="padamOPR(' +
-        item.id + ')">Padam</button>' +
+        '<p><strong>Ringkasan:</strong> ' +
+        item.ringkasan + '</p>' +
+
+        (
+            currentUser &&
+            item.user_id === currentUser.id
+
+            ?
+
+            '<button class="delete-btn" onclick="padamOPR(' +
+            item.id +
+            ')">Padam</button>'
+
+            :
+
+            ''
+
+        ) +
 
         '</div>';
 
@@ -1583,25 +1677,45 @@ function renderOPR(){
 }
 
 
-function padamOPR(id){
+/* =========================
+   PADAM OPR
+========================= */
 
-    oprData =
-        oprData.filter(function(item){
+async function padamOPR(id){
 
-            return item.id !== id;
+    if(!currentUser){
 
-        });
+        alert(
+            "Sesi pengguna tidak ditemui."
+        );
+
+        return;
+
+    }
 
 
-    localStorage.setItem(
-        "oprData",
-        JSON.stringify(oprData)
-    );
+    const { error } =
+        await supabaseClient
+            .from("opr")
+            .delete()
+            .eq("id", id)
+            .eq("user_id", currentUser.id);
 
 
-    renderOPR();
+    if(error){
 
-    updateDashboard();
+        console.error(error);
+
+        alert(
+            "OPR gagal dipadam."
+        );
+
+        return;
+
+    }
+
+
+    await loadOPR();
 
 }
 
@@ -2639,13 +2753,13 @@ async function mulaSistem(){
 
     await checkUser();
 
-    renderOPR();
+  await loadOPR();
 
-    renderEvidens();
+renderEvidens();
 
-    renderPanitia();
+renderPanitia();
 
-    await loadBilik();
+await loadBilik();
 
     updateDashboard();
 
