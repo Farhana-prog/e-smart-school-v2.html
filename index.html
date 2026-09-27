@@ -186,6 +186,58 @@ body{
     transform:translateY(-4px);
 }
 
+    /* AKTIVITI TERKINI */
+
+.recent-section{
+    background:white;
+    padding:25px;
+    border-radius:17px;
+    margin-top:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.recent-section h2{
+    color:#166534;
+    margin-bottom:18px;
+}
+
+.recent-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:15px;
+    background:#f8fafc;
+    border-radius:10px;
+    margin-bottom:10px;
+    border-left:4px solid #22c55e;
+}
+
+.recent-icon{
+    font-size:25px;
+}
+
+.recent-content{
+    flex:1;
+}
+
+.recent-content strong{
+    color:#166534;
+}
+
+.recent-content p{
+    color:#64748b;
+    font-size:13px;
+    margin-top:4px;
+}
+
+.recent-empty{
+    text-align:center;
+    padding:20px;
+    color:#64748b;
+    background:#f8fafc;
+    border-radius:10px;
+}
+
 .module h2{
     margin-bottom:8px;
 }
@@ -811,6 +863,19 @@ body{
                 <p>
                     Tempahan bilik sekolah secara digital.
                 </p>
+
+            </div>
+
+        </div>
+                <div class="recent-section">
+
+            <h2>🕐 Aktiviti Terkini</h2>
+
+            <div id="aktivitiTerkini">
+
+                <div class="recent-empty">
+                    Belum ada aktiviti direkodkan.
+                </div>
 
             </div>
 
@@ -2638,8 +2703,125 @@ function updateDashboard(){
     document.getElementById("jumlahBilik")
         .innerText = bilikData.length;
 
-}
 
+    /* AKTIVITI TERKINI */
+
+    const aktiviti = [];
+
+
+    oprData.forEach(function(item){
+
+        aktiviti.push({
+            icon:"📄",
+            jenis:"OPR",
+            tajuk:item.aktiviti,
+            tarikh:item.tarikh,
+            masa:item.created_at
+        });
+
+    });
+
+
+    evidensData.forEach(function(item){
+
+        aktiviti.push({
+            icon:"📁",
+            jenis:"Evidens SK@S",
+            tajuk:item.tajuk,
+            tarikh:item.tarikh,
+            masa:item.created_at
+        });
+
+    });
+
+
+    panitiaData.forEach(function(item){
+
+        aktiviti.push({
+            icon:"🗂️",
+            jenis:"Fail Panitia",
+            tajuk:item.dokumen,
+            tarikh:item.tarikh,
+            masa:item.created_at
+        });
+
+    });
+
+
+    bilikData.forEach(function(item){
+
+        aktiviti.push({
+            icon:"🏢",
+            jenis:"Tempahan Bilik",
+            tajuk:item.bilik,
+            tarikh:item.tarikh,
+            masa:item.created_at
+        });
+
+    });
+
+
+    aktiviti.sort(function(a,b){
+
+        return new Date(b.masa) - new Date(a.masa);
+
+    });
+
+
+    const terkini =
+        aktiviti.slice(0,5);
+
+    const box =
+        document.getElementById("aktivitiTerkini");
+
+
+    if(terkini.length === 0){
+
+        box.innerHTML =
+            '<div class="recent-empty">' +
+            'Belum ada aktiviti direkodkan.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    box.innerHTML = "";
+
+
+    terkini.forEach(function(item){
+
+        box.innerHTML +=
+
+        '<div class="recent-item">' +
+
+            '<div class="recent-icon">' +
+                item.icon +
+            '</div>' +
+
+            '<div class="recent-content">' +
+
+                '<strong>' +
+                    item.jenis +
+                '</strong>' +
+
+                '<p>' +
+                    item.tajuk +
+                '</p>' +
+
+                '<p>' +
+                    'Tarikh: ' +
+                    item.tarikh +
+                '</p>' +
+
+            '</div>' +
+
+        '</div>';
+
+    });
+
+}
 
 /* =========================
    MULA SISTEM
