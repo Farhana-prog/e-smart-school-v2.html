@@ -101,11 +101,18 @@
         });
 
       if (error) {
-        message.textContent = "Email atau password tidak betul.";
-        return;
-      }
+  message.textContent = "Email atau password tidak betul.";
+  return;
+}
 
-      window.location.href = "dashboard.html";
+await supabaseClient.auth.updateUser({
+  data: {
+    first_name: "Farhana",
+    last_name: "Jamil"
+  }
+});
+
+window.location.href = "dashboard.html";
     }
   </script>
 
