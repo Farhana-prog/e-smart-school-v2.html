@@ -174,28 +174,27 @@ async function register() {
 
 
     const { data, error } =
-        await supabaseClient.auth.signUp({
+    await supabaseClient.auth.signUp({
 
-            email: email,
+        email: email,
 
-            password: password,
+        password: password,
 
-            options: {
+        options: {
 
-              data: {
+            data: {
 
-    first_name: firstName,
+                first_name: firstName,
 
-    last_name: lastName,
+                last_name: lastName,
 
-    school_name: school
-
-
-                }
+                school_name: school
 
             }
 
-        });
+        }
+
+    });
 
 
     if (error) {
