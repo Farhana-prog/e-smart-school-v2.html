@@ -1719,27 +1719,26 @@ async function padamOPR(id){
 
 }
 
-
 /* =========================
    EVIDENS
 ========================= */
 
-function simpanEvidens(){
+async function simpanEvidens(){
 
     const standard =
         document.getElementById("evidensStandard").value;
 
     const tajuk =
-        document.getElementById("evidensTajuk").value;
+        document.getElementById("evidensTajuk").value.trim();
 
     const tarikh =
         document.getElementById("evidensTarikh").value;
 
     const catatan =
-        document.getElementById("evidensCatatan").value;
+        document.getElementById("evidensCatatan").value.trim();
 
     const fail =
-        document.getElementById("evidensFail").value;
+        document.getElementById("evidensFail").value.trim();
 
 
     if(
@@ -1759,26 +1758,55 @@ function simpanEvidens(){
     }
 
 
-    const data = {
+    if(!currentUser){
 
-        id:Date.now(),
-        standard,
-        tajuk,
-        tarikh,
-        catatan,
-        fail
+        alert(
+            "Sesi pengguna tidak ditemui. Sila login semula."
+        );
 
-    };
+        return;
 
-
-    evidensData.push(data);
+    }
 
 
-    localStorage.setItem(
-        "evidensData",
-        JSON.stringify(evidensData)
-    );
+    /* SIMPAN KE SUPABASE */
 
+    const { data, error } =
+        await supabaseClient
+            .from("evidens")
+            .insert({
+
+                user_id: currentUser.id,
+
+                standard: standard,
+
+                tajuk: tajuk,
+
+                tarikh: tarikh,
+
+                catatan: catatan,
+
+                fail: fail
+
+            })
+            .select()
+            .single();
+
+
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "Evidens gagal disimpan. Sila cuba lagi."
+        );
+
+        return;
+
+    }
+
+
+    /* PAPAR MESEJ BERJAYA */
 
     document.getElementById("evidensResult")
         .style.display = "block";
@@ -1798,7 +1826,7 @@ function simpanEvidens(){
 
     resetEvidens(false);
 
-    renderEvidens();
+    await loadEvidens();
 
     updateDashboard();
 
@@ -1817,6 +1845,7 @@ function resetEvidens(hide=true){
 
     document.getElementById("evidensFail").value = "";
 
+
     if(hide){
 
         document.getElementById("evidensResult")
@@ -1826,6 +1855,46 @@ function resetEvidens(hide=true){
 
 }
 
+
+/* =========================
+   LOAD EVIDENS
+========================= */
+
+async function loadEvidens(){
+
+    const { data, error } =
+        await supabaseClient
+            .from("evidens")
+            .select("*")
+            .order("created_at", {
+                ascending:false
+            });
+
+
+    if(error){
+
+        console.error(error);
+
+        document.getElementById("senaraiEvidens").innerHTML =
+            '<div class="empty">Gagal memuatkan evidens.</div>';
+
+        return;
+
+    }
+
+
+    evidensData = data || [];
+
+    renderEvidens();
+
+    updateDashboard();
+
+}
+
+
+/* =========================
+   PAPAR EVIDENS
+========================= */
 
 function renderEvidens(){
 
@@ -1846,7 +1915,7 @@ function renderEvidens(){
     box.innerHTML = "";
 
 
-    evidensData.slice().reverse().forEach(function(item){
+    evidensData.forEach(function(item){
 
         box.innerHTML +=
 
@@ -1866,8 +1935,21 @@ function renderEvidens(){
         '<p><strong>Fail:</strong> ' +
         item.fail + '</p>' +
 
-        '<button class="delete-btn" onclick="padamEvidens(' +
-        item.id + ')">Padam</button>' +
+        (
+            currentUser &&
+            item.user_id === currentUser.id
+
+            ?
+
+            '<button class="delete-btn" onclick="padamEvidens(' +
+            item.id +
+            ')">Padam</button>'
+
+            :
+
+            ''
+
+        ) +
 
         '</div>';
 
@@ -1876,25 +1958,45 @@ function renderEvidens(){
 }
 
 
-function padamEvidens(id){
+/* =========================
+   PADAM EVIDENS
+========================= */
 
-    evidensData =
-        evidensData.filter(function(item){
+async function padamEvidens(id){
 
-            return item.id !== id;
+    if(!currentUser){
 
-        });
+        alert(
+            "Sesi pengguna tidak ditemui."
+        );
+
+        return;
+
+    }
 
 
-    localStorage.setItem(
-        "evidensData",
-        JSON.stringify(evidensData)
-    );
+    const { error } =
+        await supabaseClient
+            .from("evidens")
+            .delete()
+            .eq("id", id)
+            .eq("user_id", currentUser.id);
 
 
-    renderEvidens();
+    if(error){
 
-    updateDashboard();
+        console.error(error);
+
+        alert(
+            "Evidens gagal dipadam."
+        );
+
+        return;
+
+    }
+
+
+    await loadEvidens();
 
 }
 
@@ -2755,7 +2857,7 @@ async function mulaSistem(){
 
   await loadOPR();
 
-renderEvidens();
+await loadEvidens();
 
 renderPanitia();
 
