@@ -91,6 +91,9 @@ button:hover {
     <label>Last Name</label>
     <input type="text" id="lastName" placeholder="Contoh: Jamil">
 
+    <label>Nama Sekolah</label>
+<input type="text" id="school" placeholder="Contoh: SMK Tinggi Batu Pahat">
+    
     <label>Email</label>
     <input type="email" id="email" placeholder="Email guru">
 
@@ -144,6 +147,9 @@ async function register() {
     const lastName =
         document.getElementById("lastName").value.trim();
 
+    const school =
+        document.getElementById("school").value.trim();
+    
     const email =
         document.getElementById("email").value.trim();
 
@@ -154,7 +160,7 @@ async function register() {
         document.getElementById("message");
 
 
-    if (!firstName || !lastName || !email || !password) {
+    if (!firstName || !lastName || !school || !email || !password) {
 
         message.textContent =
             "Sila lengkapkan semua maklumat.";
@@ -176,11 +182,14 @@ async function register() {
 
             options: {
 
-                data: {
+              data: {
 
-                    first_name: firstName,
+    first_name: firstName,
 
-                    last_name: lastName
+    last_name: lastName,
+
+    school_name: school
+
 
                 }
 
