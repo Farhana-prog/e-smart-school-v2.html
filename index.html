@@ -623,16 +623,52 @@ body{
    <div style="position:relative;">
 
     <button onclick="toggleUserMenu()" id="userMenuButton" style="
-        background:none;
-        border:none;
-        cursor:pointer;
-        font-size:16px;
-        font-weight:bold;
-        color:#333;
-        padding:10px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+    color:#333;
+    padding:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+">
+
+    <div style="
+        width:34px;
+        height:34px;
+        border-radius:50%;
+        overflow:hidden;
+        background:#e5e7eb;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-shrink:0;
     ">
-        👤 <span id="userName">Guru</span> ▾
-    </button>
+
+        <img id="topProfileImage"
+             src=""
+             alt="Profil"
+             style="
+                width:100%;
+                height:100%;
+                object-fit:cover;
+                display:none;
+             ">
+
+        <span id="topProfilePlaceholder"
+              style="font-size:18px;">
+            👤
+        </span>
+
+    </div>
+
+    <span id="userName">Guru</span>
+
+    <span>▾</span>
+
+</button>
 
    <div id="userDropdown" style="
     display:none;
@@ -2229,6 +2265,39 @@ async function checkUser(){
 
     document.getElementById("userName").innerHTML =
         (fullName || "Guru");
+    const topProfileImage =
+    document.getElementById("topProfileImage");
+
+const topProfilePlaceholder =
+    document.getElementById("topProfilePlaceholder");
+
+if(currentUser.user_metadata.profile_image){
+
+    const { data: publicData } =
+        supabaseClient.storage
+            .from("profile-images")
+            .getPublicUrl(
+                currentUser.user_metadata.profile_image
+            );
+
+    topProfileImage.src =
+        publicData.publicUrl + "?t=" + Date.now();
+
+    topProfileImage.style.display =
+        "block";
+
+    topProfilePlaceholder.style.display =
+        "none";
+
+} else {
+
+    topProfileImage.style.display =
+        "none";
+
+    topProfilePlaceholder.style.display =
+        "block";
+
+}
 
 
     document.getElementById("welcomeMessage").innerHTML =
@@ -2291,8 +2360,8 @@ if(user.user_metadata.profile_image){
                 user.user_metadata.profile_image
             );
 
-    profileImage.src =
-        publicData.publicUrl;
+   profileImage.src =
+    publicData.publicUrl + "?t=" + Date.now();
 
     profileImage.style.display =
         "block";
