@@ -420,6 +420,64 @@ body{
 </head>
 
 <body>
+    <div id="profileModal" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    z-index:2000;
+    justify-content:center;
+    align-items:center;
+">
+
+    <div style="
+        background:white;
+        width:350px;
+        max-width:90%;
+        border-radius:15px;
+        padding:25px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.2);
+    ">
+
+        <h2 style="margin-top:0;">
+            👤 Profil Guru
+        </h2>
+
+        <p>
+            <strong>Nama:</strong><br>
+            <span id="profileName">-</span>
+        </p>
+
+        <p>
+            <strong>Email:</strong><br>
+            <span id="profileEmail">-</span>
+        </p>
+
+        <p>
+            <strong>Nama Sekolah:</strong><br>
+            <span id="profileSchool">-</span>
+        </p>
+
+        <button onclick="closeProfile()" style="
+            width:100%;
+            padding:12px;
+            margin-top:10px;
+            border:none;
+            border-radius:8px;
+            background:#176b3a;
+            color:white;
+            cursor:pointer;
+            font-weight:bold;
+        ">
+            Tutup
+        </button>
+
+    </div>
+
+</div>
 
 <!-- SIDEBAR -->
 
@@ -473,25 +531,61 @@ body{
         Dashboard
     </h1>
 
-    <div style="display:flex; align-items:center; gap:10px;">
+   <div style="position:relative;">
 
-        <div class="user" id="userName">
-            👤 Guru
-        </div>
+    <button onclick="toggleUserMenu()" id="userMenuButton" style="
+        background:none;
+        border:none;
+        cursor:pointer;
+        font-size:16px;
+        font-weight:bold;
+        color:#333;
+        padding:10px;
+    ">
+        👤 <span id="userName">Guru</span> ▾
+    </button>
+
+    <div id="userDropdown" style="
+        display:none;
+        position:absolute;
+        right:0;
+        top:50px;
+        background:white;
+        width:200px;
+        border-radius:10px;
+        box-shadow:0 4px 15px rgba(0,0,0,0.15);
+        overflow:hidden;
+        z-index:1000;
+    ">
+
+        <button onclick="showProfile()" style="
+            width:100%;
+            padding:13px 15px;
+            border:none;
+            background:white;
+            text-align:left;
+            cursor:pointer;
+            font-size:15px;
+        ">
+            👤 Profil Guru
+        </button>
 
         <button onclick="logout()" style="
-            background:#dc2626;
-            color:white;
+            width:100%;
+            padding:13px 15px;
             border:none;
-            padding:10px 15px;
-            border-radius:8px;
+            background:white;
+            color:#dc2626;
+            text-align:left;
             cursor:pointer;
-            font-weight:bold;
+            font-size:15px;
         ">
-            Log Keluar
+            🚪 Log Keluar
         </button>
 
     </div>
+
+</div>
 
 </div>
 
@@ -2015,10 +2109,15 @@ const supabaseClient =
     );
 
 
+let currentUser = null;
+
+
 async function checkUser(){
 
     const { data, error } =
         await supabaseClient.auth.getUser();
+
+    currentUser = data.user;
 
     if(error || !data.user){
 
