@@ -2276,6 +2276,42 @@ function toggleUserMenu(){
     document.getElementById("profileSchool").textContent =
         user.user_metadata.school_name || "Belum diisi";
 
+       const profileImage =
+    document.getElementById("profileImage");
+
+const profilePlaceholder =
+    document.getElementById("profileImagePlaceholder");
+
+if(user.user_metadata.profile_image){
+
+    const { data: publicData } =
+        supabaseClient.storage
+            .from("profile-images")
+            .getPublicUrl(
+                user.user_metadata.profile_image
+            );
+
+    profileImage.src =
+        publicData.publicUrl;
+
+    profileImage.style.display =
+        "block";
+
+    profilePlaceholder.style.display =
+        "none";
+
+} else {
+
+    profileImage.src = "";
+
+    profileImage.style.display =
+        "none";
+
+    profilePlaceholder.style.display =
+        "block";
+
+}
+
     document.getElementById("userDropdown").style.display =
         "none";
 
@@ -2290,7 +2326,7 @@ function closeProfile(){
         "none";
 
 }
-   function previewProfileImage(event){
+async function previewProfileImage(event){
 
     const file =
         event.target.files[0];
@@ -2299,25 +2335,104 @@ function closeProfile(){
         return;
     }
 
-    const reader =
-        new FileReader();
+    if(!currentUser){
+        alert("Sesi pengguna tidak ditemui.");
+        return;
+    }
 
-    reader.onload = function(e){
+    // Semak jenis fail
+    if(!file.type.startsWith("image/")){
+        alert("Sila pilih fail gambar.");
+        return;
+    }
 
-        const image =
-            document.getElementById("profileImage");
+    // Had saiz 5MB
+    if(file.size > 5 * 1024 * 1024){
+        alert("Saiz gambar mestilah kurang daripada 5MB.");
+        return;
+    }
 
-        const placeholder =
-            document.getElementById("profileImagePlaceholder");
+    const extension =
+        file.name.split(".").pop();
 
-        image.src = e.target.result;
+    const filePath =
+        currentUser.id + "/profile." + extension;
 
-        image.style.display = "block";
+    // Upload gambar ke Supabase Storage
+    const { error: uploadError } =
+        await supabaseClient.storage
+            .from("profile-images")
+            .upload(
+                filePath,
+                file,
+                {
+                    upsert:true,
+                    contentType:file.type
+                }
+            );
 
-        placeholder.style.display = "none";
-    };
+    if(uploadError){
 
-    reader.readAsDataURL(file);
+        console.error(uploadError);
+
+        alert(
+            "Gambar gagal dimuat naik. Sila cuba lagi."
+        );
+
+        return;
+    }
+
+    // Dapatkan URL gambar
+    const { data: publicData } =
+        supabaseClient.storage
+            .from("profile-images")
+            .getPublicUrl(filePath);
+
+    const imageUrl =
+        publicData.publicUrl;
+
+    // Simpan lokasi gambar dalam metadata pengguna
+    const { data: updatedData, error: updateError } =
+        await supabaseClient.auth.updateUser({
+
+            data:{
+                profile_image: filePath
+            }
+
+        });
+
+    if(updateError){
+
+        console.error(updateError);
+
+        alert(
+            "Gambar telah dimuat naik tetapi maklumat profil gagal disimpan."
+        );
+
+        return;
+    }
+
+    currentUser =
+        updatedData.user;
+
+    // Paparkan gambar
+    const image =
+        document.getElementById("profileImage");
+
+    const placeholder =
+        document.getElementById("profileImagePlaceholder");
+
+    image.src =
+        imageUrl + "?t=" + Date.now();
+
+    image.style.display =
+        "block";
+
+    placeholder.style.display =
+        "none";
+
+    alert("✅ Gambar profil berjaya disimpan.");
+
 }
 
 
