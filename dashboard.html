@@ -6,6 +6,8 @@
 
 <title>Dashboard Guru</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 * {
     box-sizing: border-box;
@@ -14,17 +16,18 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f5f7fb;
+    background: #f5f8f2;
     color: #222;
 }
 
 header {
-    background: #1e3a8a;
+    background: #176b3a;
     color: white;
     padding: 20px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 5px solid #f4c430;
 }
 
 header h1 {
@@ -33,8 +36,8 @@ header h1 {
 }
 
 .logout {
-    background: white;
-    color: #1e3a8a;
+    background: #f4c430;
+    color: #176b3a;
     border: none;
     padding: 9px 15px;
     border-radius: 7px;
@@ -54,6 +57,7 @@ header h1 {
 
 .welcome h2 {
     margin-bottom: 5px;
+    color: #176b3a;
 }
 
 .welcome p {
@@ -70,6 +74,7 @@ header h1 {
     background: white;
     padding: 30px;
     border-radius: 15px;
+    border-top: 5px solid #f4c430;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     text-decoration: none;
     color: #222;
@@ -78,6 +83,7 @@ header h1 {
 
 .card:hover {
     transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(0,0,0,0.12);
 }
 
 .icon {
@@ -87,6 +93,7 @@ header h1 {
 
 .card h3 {
     margin: 5px 0;
+    color: #176b3a;
 }
 
 .card p {
@@ -94,6 +101,7 @@ header h1 {
 }
 
 @media (max-width: 600px) {
+
     .modules {
         grid-template-columns: 1fr;
     }
@@ -125,7 +133,9 @@ header h1 {
 
     <div class="welcome">
 
-        <h2>Selamat Datang, Cikgu 👋</h2>
+        <h2 id="welcomeMessage">
+            Selamat Datang, Cikgu 👋
+        </h2>
 
         <p>
             Sila pilih modul yang ingin digunakan.
@@ -147,7 +157,6 @@ header h1 {
 
         </a>
 
-
         <a class="card" href="index.html">
 
             <div class="icon">📁</div>
@@ -160,7 +169,6 @@ header h1 {
 
         </a>
 
-
         <a class="card" href="index.html">
 
             <div class="icon">🗂️</div>
@@ -172,7 +180,6 @@ header h1 {
             </p>
 
         </a>
-
 
         <a class="card" href="index.html">
 
@@ -192,11 +199,45 @@ header h1 {
 
 <script>
 
-function logout() {
+const SUPABASE_URL =
+    "https://edrbpbinutswlxislomo.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_0e-OOVhhhthMf5yC28QTHw_vYTmWbQa";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+async function checkUser() {
+
+    const { data, error } =
+        await supabaseClient.auth.getUser();
+
+    if (error || !data.user) {
+
+        window.location.href = "login.html";
+
+        return;
+    }
+
+    document.getElementById("welcomeMessage").textContent =
+        "Selamat Datang, " + data.user.email + " 👋";
+}
+
+
+async function logout() {
+
+    await supabaseClient.auth.signOut();
 
     window.location.href = "login.html";
-
 }
+
+
+checkUser();
 
 </script>
 
