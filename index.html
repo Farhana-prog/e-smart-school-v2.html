@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>e-SMART SCHOOL | Sekolah Menengah Tinggi</title>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 
 *{
@@ -467,17 +467,33 @@ body{
 
 <main class="main">
 
-    <div class="topbar">
+   <div class="topbar">
 
-        <h1 id="pageTitle">
-            Dashboard
-        </h1>
+    <h1 id="pageTitle">
+        Dashboard
+    </h1>
 
-        <div class="user">
-            👤 Admin Sekolah
+    <div style="display:flex; align-items:center; gap:10px;">
+
+        <div class="user" id="userName">
+            👤 Guru
         </div>
 
+        <button onclick="logout()" style="
+            background:#dc2626;
+            color:white;
+            border:none;
+            padding:10px 15px;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:bold;
+        ">
+            Log Keluar
+        </button>
+
     </div>
+
+</div>
 
 
     <!-- DASHBOARD -->
@@ -1986,6 +2002,59 @@ function updateDashboard(){
    MULA SISTEM
 ========================= */
 
+const SUPABASE_URL =
+    "https://edrbpbinutswlxislomo.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_0e-OOVhhhthMf5yC28QTHw_vYTmWbQa";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+async function checkUser(){
+
+    const { data, error } =
+        await supabaseClient.auth.getUser();
+
+    if(error || !data.user){
+
+        window.location.href = "login.html";
+
+        return;
+
+    }
+
+    const firstName =
+        data.user.user_metadata.first_name || "";
+
+    const lastName =
+        data.user.user_metadata.last_name || "";
+
+    const fullName =
+        (firstName + " " + lastName).trim();
+
+    document.getElementById("userName").innerHTML =
+        "👤 " + (fullName || "Guru");
+
+}
+
+
+async function logout(){
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href = "login.html";
+
+}
+
+
+checkUser();
+
+
 renderOPR();
 
 renderEvidens();
@@ -1997,6 +2066,5 @@ renderBilik();
 updateDashboard();
 
 </script>
-
 </body>
 </html>
