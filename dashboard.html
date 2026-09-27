@@ -224,14 +224,13 @@ async function checkUser() {
         return;
     }
 
-    const username = data.user.email.split("@")[0];
+   const firstName = data.user.user_metadata.first_name || "";
+const lastName = data.user.user_metadata.last_name || "";
 
-const name = username
-    .replace(/[._-]/g, " ")
-    .replace(/\b\w/g, char => char.toUpperCase());
+const fullName = (firstName + " " + lastName).trim();
 
 document.getElementById("welcomeMessage").textContent =
-    "Selamat Datang, Cikgu " + name + " 👋";
+    "Selamat Datang, Cikgu " + fullName + " 👋";
 }
 
 
