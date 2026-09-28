@@ -1218,13 +1218,12 @@ body{
 
             <div class="form-group">
 
-                <label>Nama Fail / Pautan</label>
+               <label>Upload Fail Panitia</label>
 
-                <input
-                    type="text"
-                    id="panitiaFail"
-                    placeholder="Contoh: minit-panitia-bil1.pdf">
-
+<input
+    type="file"
+    id="panitiaFail"
+    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
             </div>
 
 
@@ -1532,7 +1531,6 @@ async function simpanOPR(){
         return;
 
     }
-
 
     /* SIMPAN KE SUPABASE */
 
@@ -2108,8 +2106,11 @@ async function simpanPanitia(){
     const tarikh =
         document.getElementById("panitiaTarikh").value;
 
-    const fail =
-        document.getElementById("panitiaFail").value.trim();
+    const failInput =
+    document.getElementById("panitiaFail");
+
+const fail =
+    failInput.files[0];
 
 
     if(
@@ -2138,8 +2139,41 @@ async function simpanPanitia(){
         return;
 
     }
+const extension =
+    fail.name.split(".").pop();
 
+const filePath =
+    currentUser.id +
+    "/panitia-" +
+    Date.now() +
+    "." +
+    extension;
 
+const { error: uploadError } =
+    await supabaseClient.storage
+        .from("panitia-files")
+        .upload(
+            filePath,
+            fail,
+            {
+                upsert:false,
+                contentType:fail.type
+            }
+        );
+
+if(uploadError){
+    console.error(uploadError);
+    alert("Fail gagal dimuat naik. Sila cuba lagi.");
+    return;
+}
+
+const { data: publicData } =
+    supabaseClient.storage
+        .from("panitia-files")
+        .getPublicUrl(filePath);
+
+const failUrl =
+    publicData.publicUrl;
     const { data, error } =
         await supabaseClient
             .from("panitia")
@@ -2155,7 +2189,7 @@ async function simpanPanitia(){
 
                 tarikh: tarikh,
 
-                fail: fail
+                fail: failUrl
 
             })
             .select()
@@ -2300,7 +2334,7 @@ function renderPanitia(){
         item.tarikh + '</p>' +
 
         '<p><strong>Fail:</strong> ' +
-        item.fail + '</p>' +
+'<a href="' + item.fail + '" target="_blank" style="color:#166534;font-weight:bold;">🔗 Buka Fail</a></p>' +
 
         (
             currentUser &&
