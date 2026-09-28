@@ -965,6 +965,14 @@ body{
                     placeholder="Masukkan ringkasan aktiviti"></textarea>
 
             </div>
+            <div class="form-group">
+    <label>Upload Fail OPR</label>
+
+    <input
+        type="file"
+        id="oprFail"
+        accept=".pdf,.jpg,.jpeg,.png">
+</div>
 
 
             <button class="save-btn"
@@ -1502,16 +1510,23 @@ async function simpanOPR(){
 
     const ringkasan =
         document.getElementById("oprRingkasan").value.trim();
+    
+    const failInput =
+    document.getElementById("oprFail");
+
+const fail =
+    failInput.files[0];
 
 
     if(
-        !aktiviti ||
-        !tarikh ||
-        !masa ||
-        !tempat ||
-        !anjuran ||
-        !ringkasan
-    ){
+    !aktiviti ||
+    !tarikh ||
+    !masa ||
+    !tempat ||
+    !anjuran ||
+    !ringkasan ||
+    !fail
+){
 
         alert(
             "Sila lengkapkan semua maklumat OPR."
@@ -1531,7 +1546,41 @@ async function simpanOPR(){
         return;
 
     }
+const extension =
+    fail.name.split(".").pop();
 
+const filePath =
+    currentUser.id +
+    "/opr-" +
+    Date.now() +
+    "." +
+    extension;
+
+const { error: uploadError } =
+    await supabaseClient.storage
+        .from("opr-files")
+        .upload(
+            filePath,
+            fail,
+            {
+                upsert:false,
+                contentType:fail.type
+            }
+        );
+
+if(uploadError){
+    console.error(uploadError);
+    alert("Fail OPR gagal dimuat naik. Sila cuba lagi.");
+    return;
+}
+
+const { data: publicData } =
+    supabaseClient.storage
+        .from("opr-files")
+        .getPublicUrl(filePath);
+
+const failUrl =
+    publicData.publicUrl;
     /* SIMPAN KE SUPABASE */
 
     const { data, error } =
@@ -1551,7 +1600,8 @@ async function simpanOPR(){
 
                 anjuran: anjuran,
 
-                ringkasan: ringkasan
+                ringkasan: ringkasan,
+fail: failUrl
 
             })
             .select()
@@ -1611,6 +1661,8 @@ function resetOPR(hide=true){
     document.getElementById("oprAnjuran").value = "";
 
     document.getElementById("oprRingkasan").value = "";
+
+    document.getElementById("oprFail").value = "";
 
 
     if(hide){
@@ -1704,6 +1756,9 @@ function renderOPR(){
 
         '<p><strong>Ringkasan:</strong> ' +
         item.ringkasan + '</p>' +
+
+            '<p><strong>Fail:</strong> ' +
+'<a href="' + item.fail + '" target="_blank" style="color:#166534;font-weight:bold;">🔗 Buka Fail</a></p>' +
 
         (
             currentUser &&
