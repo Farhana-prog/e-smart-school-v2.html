@@ -1757,8 +1757,14 @@ function renderOPR(){
         '<p><strong>Ringkasan:</strong> ' +
         item.ringkasan + '</p>' +
 
-            '<p><strong>Fail:</strong> ' +
-'<a href="' + item.fail + '" target="_blank" style="color:#166534;font-weight:bold;">🔗 Buka Fail</a></p>' +
+            (
+    item.fail
+    ?
+    '<p><strong>Fail:</strong> ' +
+    '<a href="' + item.fail + '" target="_blank" style="color:#166534;font-weight:bold;">🔗 Buka Fail</a></p>'
+    :
+    '<p><strong>Fail:</strong> Tiada fail</p>'
+) +
 
         (
             currentUser &&
@@ -3231,6 +3237,20 @@ async function previewProfileImage(event){
 
     placeholder.style.display =
         "none";
+    const topProfileImage =
+    document.getElementById("topProfileImage");
+
+const topProfilePlaceholder =
+    document.getElementById("topProfilePlaceholder");
+
+topProfileImage.src =
+    imageUrl + "?t=" + Date.now();
+
+topProfileImage.style.display =
+    "block";
+
+topProfilePlaceholder.style.display =
+    "none";
 
     alert("✅ Gambar profil berjaya disimpan.");
 
