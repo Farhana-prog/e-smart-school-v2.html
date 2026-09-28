@@ -3,103 +3,290 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Guru - Portal Sekolah</title>
+
+  <title>Login Guru - e-SMART SCHOOL</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: #f4f6f8;
+      margin: 0;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      padding: 30px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 1000px;
+      min-height: 580px;
+      background: white;
+      border-radius: 22px;
+      overflow: hidden;
+      display: flex;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+    }
+
+    .school-image {
+      width: 55%;
+      position: relative;
+
+      background-image:
+        linear-gradient(
+          rgba(23,107,58,0.15),
+          rgba(23,107,58,0.55)
+        ),
+        url("highschool sekolah.jpg");
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    .school-text {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      bottom: 40px;
+      color: white;
+    }
+
+    .school-text h1 {
+      margin: 0 0 10px;
+      font-size: 36px;
+    }
+
+    .school-text p {
       margin: 0;
+      font-size: 17px;
+    }
+
+    .login-side {
+      width: 45%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px;
     }
 
     .login-box {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      width: 320px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 350px;
+    }
+
+    .logo {
+      width: 65px;
+      height: 65px;
+      background: #176b3a;
+      color: white;
+      border-radius: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      margin-bottom: 20px;
     }
 
     h2 {
-      text-align: center;
-      margin-bottom: 25px;
+      margin: 0;
+      color: #176b3a;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #777;
+      margin-top: 8px;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #444;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      font-size: 15px;
+      outline: none;
     }
 
-    button {
+    input:focus {
+      border-color: #176b3a;
+      box-shadow: 0 0 0 3px rgba(23,107,58,0.10);
+    }
+
+    .login-button {
       width: 100%;
-      padding: 12px;
-      margin-top: 15px;
+      padding: 13px;
+      margin-top: 25px;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       cursor: pointer;
-      background: #333;
+      background: #176b3a;
       color: white;
       font-size: 16px;
+      font-weight: bold;
     }
 
-    button:hover {
-      opacity: 0.9;
+    .login-button:hover {
+      background: #12572f;
     }
 
     #message {
       text-align: center;
       margin-top: 15px;
       color: #d00;
+      font-size: 14px;
+    }
+
+    .register-text {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .register-text a {
+      color: #176b3a;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    @media (max-width: 750px) {
+      body {
+        padding: 15px;
+      }
+
+      .login-container {
+        flex-direction: column;
+        min-height: auto;
+      }
+
+      .school-image {
+        width: 100%;
+        height: 240px;
+      }
+
+      .school-text {
+        left: 25px;
+        bottom: 25px;
+      }
+
+      .school-text h1 {
+        font-size: 27px;
+      }
+
+      .login-side {
+        width: 100%;
+        padding: 35px 25px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="login-box">
-    <h2>Portal Sekolah</h2>
+  <div class="login-container">
 
-    <input type="email" id="email" placeholder="Email guru">
-    <input type="password" id="password" placeholder="Password">
+    <div class="school-image">
+      <div class="school-text">
+        <h1>e-SMART SCHOOL</h1>
+        <p>Sistem Pengurusan Sekolah Digital</p>
+      </div>
+    </div>
 
-    <button onclick="login()">Log Masuk</button>
+    <div class="login-side">
 
-<div id="message"></div>
+      <div class="login-box">
 
-<p style="text-align: center; margin-top: 15px;">
-    Belum ada akaun?
-    <a href="register.html" style="color: #176b3a; font-weight: bold;">
-        Daftar Akaun Guru
-    </a>
-</p>
+        <div class="logo">🏫</div>
+
+        <h2>Selamat Datang</h2>
+
+        <p class="subtitle">
+          Log masuk ke Portal e-SMART SCHOOL
+        </p>
+
+        <label>Email Guru</label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Masukkan email guru"
+        >
+
+        <label>Password</label>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Masukkan password"
+        >
+
+        <button
+          class="login-button"
+          onclick="login()"
+        >
+          Log Masuk
+        </button>
+
+        <div id="message"></div>
+
+        <p class="register-text">
+          Belum ada akaun?
+          <a href="register.html">
+            Daftar Akaun Guru
+          </a>
+        </p>
+
+      </div>
+
+    </div>
+
   </div>
 
   <script>
-    const SUPABASE_URL = "https://edrbpbinutswlxislomo.supabase.co";
 
-    const SUPABASE_KEY = "sb_publishable_0e-OOVhhhthMf5yC28QTHw_vYTmWbQa";
+    const SUPABASE_URL =
+      "https://edrbpbinutswlxislomo.supabase.co";
 
-    const supabaseClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+    const SUPABASE_KEY =
+      "sb_publishable_0e-OOVhhhthMf5yC28QTHw_vYTmWbQa";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
 
     async function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const message = document.getElementById("message");
 
-      message.textContent = "Sedang log masuk...";
+      const email =
+        document.getElementById("email").value;
+
+      const password =
+        document.getElementById("password").value;
+
+      const message =
+        document.getElementById("message");
+
+      message.textContent =
+        "Sedang log masuk...";
 
       const { data, error } =
         await supabaseClient.auth.signInWithPassword({
@@ -108,13 +295,15 @@
         });
 
       if (error) {
-  message.textContent = "Email atau password tidak betul.";
-  return;
-}
+        message.textContent =
+          "Email atau password tidak betul.";
+        return;
+      }
 
-
-window.location.href = "index.html";
+      window.location.href =
+        "index.html";
     }
+
   </script>
 
 </body>
