@@ -1806,6 +1806,13 @@ function renderOPR(){
 ========================= */
 
 async function padamOPR(id){
+    const pasti = confirm(
+    "Adakah anda pasti mahu memadam OPR ini?"
+);
+
+if(!pasti){
+    return;
+}
 
     if(!currentUser){
 
@@ -2125,6 +2132,14 @@ function renderEvidens(){
 
 async function padamEvidens(id){
 
+    const pasti = confirm(
+    "Adakah anda pasti mahu memadam evidens ini?"
+);
+
+if(!pasti){
+    return;
+}
+
     if(!currentUser){
 
         alert(
@@ -2437,6 +2452,14 @@ function renderPanitia(){
 ========================= */
 
 async function padamPanitia(id){
+
+    const pasti = confirm(
+    "Adakah anda pasti mahu memadam fail panitia ini?"
+);
+
+if(!pasti){
+    return;
+}
 
     if(!currentUser){
 
@@ -2791,6 +2814,14 @@ function renderBilik(){
 ========================= */
 
 async function padamTempahan(id){
+
+    const pasti = confirm(
+    "Adakah anda pasti mahu membatalkan tempahan bilik ini?"
+);
+
+if(!pasti){
+    return;
+}
 
     if(!currentUser){
 
