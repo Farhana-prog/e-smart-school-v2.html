@@ -1079,12 +1079,12 @@ body{
 
             <div class="form-group">
 
-                <label>Nama Fail / Pautan Evidens</label>
+               <label>Upload Fail Evidens</label>
 
                 <input
-                    type="text"
+                    type="file"
                     id="evidensFail"
-                    placeholder="Contoh: gambar_program.jpg">
+                    accept=".pdf,.jpg,.jpeg,.png">
 
             </div>
 
@@ -1790,8 +1790,11 @@ async function simpanEvidens(){
     const catatan =
         document.getElementById("evidensCatatan").value.trim();
 
-    const fail =
-        document.getElementById("evidensFail").value.trim();
+    const failInput =
+    document.getElementById("evidensFail");
+
+const fail =
+    failInput.files[0];
 
 
     if(
@@ -1820,7 +1823,41 @@ async function simpanEvidens(){
         return;
 
     }
+const extension =
+    fail.name.split(".").pop();
 
+const filePath =
+    currentUser.id +
+    "/evidens-" +
+    Date.now() +
+    "." +
+    extension;
+
+const { error: uploadError } =
+    await supabaseClient.storage
+        .from("evidens-files")
+        .upload(
+            filePath,
+            fail,
+            {
+                upsert:false,
+                contentType:fail.type
+            }
+        );
+
+if(uploadError){
+    console.error(uploadError);
+    alert("Fail gagal dimuat naik. Sila cuba lagi.");
+    return;
+}
+
+const { data: publicData } =
+    supabaseClient.storage
+        .from("evidens-files")
+        .getPublicUrl(filePath);
+
+const failUrl =
+    publicData.publicUrl;
 
     /* SIMPAN KE SUPABASE */
 
@@ -1839,7 +1876,7 @@ async function simpanEvidens(){
 
                 catatan: catatan,
 
-                fail: fail
+                fail: failUrl
 
             })
             .select()
@@ -1986,7 +2023,7 @@ function renderEvidens(){
         item.catatan + '</p>' +
 
         '<p><strong>Fail:</strong> ' +
-        item.fail + '</p>' +
+'<a href="' + item.fail + '" target="_blank" style="color:#166534;font-weight:bold;">🔗 Buka Fail</a></p>' +
 
         (
             currentUser &&
