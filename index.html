@@ -883,7 +883,6 @@ body{
 
     </section>
 
-
     <!-- OPR -->
 
     <section id="opr" class="page">
@@ -1424,6 +1423,19 @@ let evidensData = [];
 let panitiaData = [];
 let bilikData = [];
 
+    function formatTarikh(tarikh){
+
+    if(!tarikh){
+        return "-";
+    }
+
+    const bahagian = tarikh.split("-");
+
+    return bahagian[2] + "/" +
+           bahagian[1] + "/" +
+           bahagian[0];
+}
+
 /* =========================
    NAVIGATION
 ========================= */
@@ -1743,7 +1755,7 @@ function renderOPR(){
         '<h3>📄 ' + item.aktiviti + '</h3>' +
 
         '<p><strong>Tarikh:</strong> ' +
-        item.tarikh + '</p>' +
+        formatTarikh(item.tarikh) + '</p>' +
 
         '<p><strong>Masa:</strong> ' +
         item.masa + '</p>' +
@@ -2076,7 +2088,7 @@ function renderEvidens(){
         item.standard + '</p>' +
 
         '<p><strong>Tarikh:</strong> ' +
-        item.tarikh + '</p>' +
+        formatTarikh(item.tarikh) + '</p>' +
 
         '<p><strong>Catatan:</strong> ' +
         item.catatan + '</p>' +
@@ -2392,7 +2404,7 @@ function renderPanitia(){
         item.kategori + '</p>' +
 
         '<p><strong>Tarikh:</strong> ' +
-        item.tarikh + '</p>' +
+        formatTarikh(item.tarikh) + '</p>' +
 
         '<p><strong>Fail:</strong> ' +
 '<a href="' + item.fail + '" target="_blank" style="color:#166534;font-weight:bold;">🔗 Buka Fail</a></p>' +
@@ -2626,7 +2638,7 @@ async function simpanTempahan(){
         bilik + "</p>" +
 
         "<p><strong>Tarikh:</strong> " +
-        tarikh + "</p>" +
+        formatTarikh(tarikh) + "</p>" +
 
         "<p><strong>Masa:</strong> " +
         mula + " - " +
@@ -2738,7 +2750,7 @@ function renderBilik(){
         item.pemohon + '</p>' +
 
         '<p><strong>Tarikh:</strong> ' +
-        item.tarikh + '</p>' +
+        formatTarikh(item.tarikh) + '</p>' +
 
         '<p><strong>Masa:</strong> ' +
         item.mula + ' - ' +
@@ -2944,7 +2956,7 @@ function updateDashboard(){
 
                 '<p>' +
                     'Tarikh: ' +
-                    item.tarikh +
+                    formatTarikh(item.tarikh) +
                 '</p>' +
 
             '</div>' +
