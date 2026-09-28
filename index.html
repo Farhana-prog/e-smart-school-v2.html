@@ -1001,6 +1001,14 @@ body{
                     📋 Senarai OPR
                 </h2>
 
+                <div class="form-group">
+    <input
+        type="text"
+        id="searchOPR"
+        placeholder="🔍 Cari OPR..."
+        oninput="cariOPR()">
+</div>
+
                 <div id="senaraiOPR">
 
                     <div class="empty">
@@ -1727,13 +1735,35 @@ async function loadOPR(){
    PAPAR OPR
 ========================= */
 
-function renderOPR(){
+function cariOPR(){
+
+    const carian =
+        document.getElementById("searchOPR")
+            .value
+            .toLowerCase();
+
+    const hasilCarian =
+        oprData.filter(function(item){
+
+            return (
+                (item.aktiviti || "").toLowerCase().includes(carian) ||
+                (item.tempat || "").toLowerCase().includes(carian) ||
+                (item.anjuran || "").toLowerCase().includes(carian) ||
+                (item.ringkasan || "").toLowerCase().includes(carian)
+            );
+
+        });
+
+    renderOPR(hasilCarian);
+}
+    
+function renderOPR(data = oprData){
 
     const box =
         document.getElementById("senaraiOPR");
 
 
-    if(oprData.length === 0){
+    if(data.length === 0){
 
         box.innerHTML =
             '<div class="empty">Belum ada OPR direkodkan.</div>';
@@ -1746,7 +1776,7 @@ function renderOPR(){
     box.innerHTML = "";
 
 
-    oprData.forEach(function(item){
+    data.forEach(function(item){
 
         box.innerHTML +=
 
