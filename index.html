@@ -1130,7 +1130,28 @@ body{
                 <h2>
                     📋 Senarai Evidens
                 </h2>
+<div class="form-group">
+    <input
+        type="text"
+        id="searchEvidens"
+        placeholder="🔍 Cari evidens..."
+        oninput="tapisEvidens()">
+</div>
 
+<div class="form-group">
+    <select
+        id="filterStandard"
+        onchange="tapisEvidens()">
+
+        <option value="">Semua Standard</option>
+        <option value="Standard 1">Standard 1</option>
+        <option value="Standard 2">Standard 2</option>
+        <option value="Standard 3">Standard 3</option>
+        <option value="Standard 4">Standard 4</option>
+        <option value="Standard 5">Standard 5</option>
+
+    </select>
+</div>
                 <div id="senaraiEvidens">
 
                     <div class="empty">
@@ -2094,13 +2115,45 @@ async function loadEvidens(){
    PAPAR EVIDENS
 ========================= */
 
-function renderEvidens(){
+    function tapisEvidens(){
+
+    const carian =
+        document.getElementById("searchEvidens")
+            .value
+            .toLowerCase();
+
+    const standard =
+        document.getElementById("filterStandard")
+            .value;
+
+    const hasil =
+        evidensData.filter(function(item){
+
+            const padanCarian =
+                (item.tajuk || "")
+                    .toLowerCase()
+                    .includes(carian) ||
+                (item.catatan || "")
+                    .toLowerCase()
+                    .includes(carian);
+
+            const padanStandard =
+                standard === "" ||
+                item.standard === standard;
+
+            return padanCarian && padanStandard;
+        });
+
+    renderEvidens(hasil);
+}
+    
+function renderEvidens(data = evidensData){
 
     const box =
         document.getElementById("senaraiEvidens");
 
 
-    if(evidensData.length === 0){
+    if(data.length === 0){
 
         box.innerHTML =
             '<div class="empty">Belum ada evidens direkodkan.</div>';
@@ -2112,8 +2165,7 @@ function renderEvidens(){
 
     box.innerHTML = "";
 
-
-    evidensData.forEach(function(item){
+    data.forEach(function(item){
 
         box.innerHTML +=
 
