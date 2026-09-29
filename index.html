@@ -1308,14 +1308,23 @@ body{
                 </h2>
 
                 <div class="form-group">
+
     <input
         type="text"
         id="searchPanitia"
-        placeholder="🔍 Cari dokumen..."
-        oninput="tapisPanitia()">
+        placeholder="Masukkan carian dokumen...">
+
+    <button
+        class="save-btn"
+        onclick="tapisPanitia()"
+        style="margin-top:10px;">
+        🔍 Cari
+    </button>
+
 </div>
 
 <div class="form-group">
+
     <select
         id="filterPanitia"
         onchange="tapisPanitia()">
@@ -1333,9 +1342,11 @@ body{
         <option>Teknologi Maklumat</option>
 
     </select>
+
 </div>
 
 <div class="form-group">
+
     <select
         id="filterKategori"
         onchange="tapisPanitia()">
@@ -1350,10 +1361,9 @@ body{
         <option>Lain-lain</option>
 
     </select>
+
 </div>
                 
-                <div id="senaraiPanitia">
-
                     <div class="empty">
                         Belum ada fail direkodkan.
                     </div>
@@ -1486,12 +1496,20 @@ body{
                     📅 Senarai Tempahan
                 </h2>
 
-                <div class="form-group">
+               <div class="form-group">
+
     <input
         type="text"
         id="searchBilik"
-        placeholder="🔍 Cari pemohon atau tujuan..."
-        oninput="tapisBilik()">
+        placeholder="Masukkan nama pemohon atau tujuan...">
+
+    <button
+        class="save-btn"
+        onclick="tapisBilik()"
+        style="margin-top:10px;">
+        🔍 Cari
+    </button>
+
 </div>
 
 <div class="form-group">
@@ -1771,7 +1789,7 @@ fail: failUrl
         aktiviti + "</p>" +
 
         "<p><strong>Tarikh:</strong> " +
-        tarikh + "</p>";
+formatTarikh(tarikh) + "</p>";
 
 
     resetOPR(false);
