@@ -1469,6 +1469,38 @@ body{
                     📅 Senarai Tempahan
                 </h2>
 
+                <div class="form-group">
+    <input
+        type="text"
+        id="searchBilik"
+        placeholder="🔍 Cari pemohon atau tujuan..."
+        oninput="tapisBilik()">
+</div>
+
+<div class="form-group">
+    <select
+        id="filterBilik"
+        onchange="tapisBilik()">
+
+        <option value="">Semua Bilik</option>
+        <option>Dewan Sekolah</option>
+        <option>Bilik Mesyuarat</option>
+        <option>Makmal Sains</option>
+        <option>Makmal Komputer</option>
+        <option>Bilik Seminar</option>
+        <option>Pusat Sumber</option>
+        <option>Bilik AV</option>
+
+    </select>
+</div>
+
+<div class="form-group">
+    <input
+        type="date"
+        id="filterTarikhBilik"
+        onchange="tapisBilik()">
+</div>
+                    
                 <div id="senaraiBilik">
 
                     <div class="empty">
@@ -2910,13 +2942,57 @@ async function loadBilik(){
    PAPAR TEMPAHAN
 ========================= */
 
-function renderBilik(){
+    function tapisBilik(){
+
+    const carian =
+        document.getElementById("searchBilik")
+            .value
+            .toLowerCase();
+
+    const bilik =
+        document.getElementById("filterBilik")
+            .value;
+
+    const tarikh =
+        document.getElementById("filterTarikhBilik")
+            .value;
+
+    const hasil =
+        bilikData.filter(function(item){
+
+            const padanCarian =
+                (item.pemohon || "")
+                    .toLowerCase()
+                    .includes(carian) ||
+                (item.tujuan || "")
+                    .toLowerCase()
+                    .includes(carian);
+
+            const padanBilik =
+                bilik === "" ||
+                item.bilik === bilik;
+
+            const padanTarikh =
+                tarikh === "" ||
+                item.tarikh === tarikh;
+
+            return (
+                padanCarian &&
+                padanBilik &&
+                padanTarikh
+            );
+        });
+
+    renderBilik(hasil);
+}
+    
+function renderBilik(data = bilikData){
 
     const box =
         document.getElementById("senaraiBilik");
 
 
-    if(bilikData.length === 0){
+    if(data.length === 0){
 
         box.innerHTML =
             '<div class="empty">Belum ada tempahan.</div>';
@@ -2929,7 +3005,7 @@ function renderBilik(){
     box.innerHTML = "";
 
 
-    bilikData.forEach(function(item){
+    data.forEach(function(item){
 
         box.innerHTML +=
 
