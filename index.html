@@ -1290,6 +1290,51 @@ body{
                     📋 Senarai Fail Panitia
                 </h2>
 
+                <div class="form-group">
+    <input
+        type="text"
+        id="searchPanitia"
+        placeholder="🔍 Cari dokumen..."
+        oninput="tapisPanitia()">
+</div>
+
+<div class="form-group">
+    <select
+        id="filterPanitia"
+        onchange="tapisPanitia()">
+
+        <option value="">Semua Panitia</option>
+        <option>Bahasa Melayu</option>
+        <option>Bahasa Inggeris</option>
+        <option>Matematik</option>
+        <option>Sains</option>
+        <option>Sejarah</option>
+        <option>Geografi</option>
+        <option>Pendidikan Islam</option>
+        <option>Pendidikan Jasmani</option>
+        <option>Reka Bentuk dan Teknologi</option>
+        <option>Teknologi Maklumat</option>
+
+    </select>
+</div>
+
+<div class="form-group">
+    <select
+        id="filterKategori"
+        onchange="tapisPanitia()">
+
+        <option value="">Semua Kategori</option>
+        <option>Minit Mesyuarat</option>
+        <option>Perancangan Tahunan</option>
+        <option>Program Panitia</option>
+        <option>Pentaksiran</option>
+        <option>Laporan</option>
+        <option>Surat / Pekeliling</option>
+        <option>Lain-lain</option>
+
+    </select>
+</div>
+                
                 <div id="senaraiPanitia">
 
                     <div class="empty">
@@ -2467,13 +2512,54 @@ async function loadPanitia(){
    PAPAR PANITIA
 ========================= */
 
-function renderPanitia(){
+    function tapisPanitia(){
+
+    const carian =
+        document.getElementById("searchPanitia")
+            .value
+            .toLowerCase();
+
+    const panitia =
+        document.getElementById("filterPanitia")
+            .value;
+
+    const kategori =
+        document.getElementById("filterKategori")
+            .value;
+
+    const hasil =
+        panitiaData.filter(function(item){
+
+            const padanCarian =
+                (item.dokumen || "")
+                    .toLowerCase()
+                    .includes(carian);
+
+            const padanPanitia =
+                panitia === "" ||
+                item.panitia === panitia;
+
+            const padanKategori =
+                kategori === "" ||
+                item.kategori === kategori;
+
+            return (
+                padanCarian &&
+                padanPanitia &&
+                padanKategori
+            );
+        });
+
+    renderPanitia(hasil);
+}
+    
+function renderPanitia(data = panitiaData){
 
     const box =
         document.getElementById("senaraiPanitia");
 
 
-    if(panitiaData.length === 0){
+    if(data.length === 0){
 
         box.innerHTML =
             '<div class="empty">Belum ada fail direkodkan.</div>';
@@ -2486,7 +2572,7 @@ function renderPanitia(){
     box.innerHTML = "";
 
 
-    panitiaData.forEach(function(item){
+    data.forEach(function(item){
 
         box.innerHTML +=
 
